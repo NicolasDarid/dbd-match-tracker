@@ -27,11 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900`}
       >
-        <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full p-4">
+        <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full p-4 ">
           <Header />
-          {children}
+          <main className="px-4">{children}</main>
           <Toaster />
         </div>
       </body>

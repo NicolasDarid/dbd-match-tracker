@@ -29,6 +29,7 @@ export default function SignUp() {
         onSuccess: () => {
           setIsLoading(false);
           router.push("/");
+          router.refresh();
         },
         onError: (ctx: { error: { message: string } }) => {
           toast.error(ctx.error.message);

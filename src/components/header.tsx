@@ -8,17 +8,22 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LogoutButton } from "./logout";
-
-//import Image from "next/image";
+import Image from "next/image";
+import logo from "../../public/logo.png";
 
 export default async function Header() {
   const user = await getUser();
 
   return (
-    <header className="flex items-center gap-4 px-4 py-2 border-b justify-between">
+    <header className="flex items-center gap-4 px-4 py-2 border-b justify-between text-xl">
       <Link href="/">
-        Home
-        {/* <Image src="/logo.png" alt="logo" width={100} height={100} /> */}
+        <Image
+          src={logo}
+          alt="logo"
+          width={64}
+          height={64}
+          className="rounded-md"
+        />
       </Link>
       <div>
         {user ? (
@@ -36,7 +41,12 @@ export default async function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Link href="/auth/signin">Sign In</Link>
+          <Link
+            href="/auth/signin"
+            className="text-primary hover:bg-gray-300 rounded-md px-2 py-1"
+          >
+            Sign In
+          </Link>
         )}
       </div>
     </header>
