@@ -1,8 +1,10 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUser } from "@/lib/auth-session";
 import { LogIn } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import MatchHistory from "@/components/matchHistory";
+import { Button } from "@/components/ui/button";
 
 export default async function Home() {
   const user = await getUser();
@@ -25,15 +27,19 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center max-h-full max-w-4xl mx-auto">
-      <Card className="w-full mx-auto">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">{user.name}</CardTitle>
-          {user.image ? (
-            <Image src={user.image} alt={user.name} width={100} height={100} />
-          ) : null}
-        </CardHeader>
-      </Card>
-    </div>
+    <Card className="max-w-3xl mx-auto bg-gradient-to-l from-gray-200/40 to-gray-200/40 via-gray-300/40">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle className="text-center text-2xl">{user.name}</CardTitle>
+        {user.image ? (
+          <Image src={user.image} alt={user.name} width={100} height={100} />
+        ) : null}
+        <Link href="/match/add">
+          <Button>Add Match</Button>
+        </Link>
+      </CardHeader>
+      <CardContent>
+        <MatchHistory />
+      </CardContent>
+    </Card>
   );
 }

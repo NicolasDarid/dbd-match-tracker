@@ -1,4 +1,4 @@
-import { unauthorized } from "next/navigation";
+import { redirect, unauthorized } from "next/navigation";
 import { auth } from "./auth"; // path to your Better Auth server instance
 import { headers } from "next/headers";
 
@@ -15,4 +15,12 @@ export const getAuthorization = async () => {
   if (!user) {
     unauthorized();
   }
+};
+
+export const getRequiredUser = async () => {
+  const user = await getUser();
+  if (!user) {
+    redirect("/auth/signin");
+  }
+  return user;
 };

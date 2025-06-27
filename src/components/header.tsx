@@ -43,7 +43,7 @@ export default async function Header() {
         ) : (
           <Link
             href="/auth/signin"
-            className="text-primary hover:bg-gray-300 rounded-md px-2 py-1"
+            className="text-primary bg-gray-100 hover:bg-gray-300 rounded-md px-2 py-1"
           >
             Sign In
           </Link>
