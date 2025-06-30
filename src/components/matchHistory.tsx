@@ -1,24 +1,37 @@
 import { PrismaClient } from "@/generated/prisma";
 import { getRequiredUser } from "@/lib/auth-session";
-import MatchCard from "./match-card";
+import { MatchHistoryClient } from "./matchHistoryClient";
 
 const prisma = new PrismaClient();
 
-export default async function MatchHistory() {
+export const MatchHistory = async () => {
   const user = await getRequiredUser();
 
-  const matchHistory = await prisma.matchHistory.findMany({
+  const matchHistory = await prisma.matchHistory.findUnique({
     where: {
       userId: user?.id,
     },
     include: {
-      matchs: {
+      killerMatches: true,
+      killerMatches: {
         include: {
           killer: true,
           map: true,
-          killerPerks: true,
-          survivors: true,
-          addOns: true,
+          perks: true,
+        },
+        orderBy: {
+          playedAt: "desc",
+        },
+      },
+      survivorMatches: true,
+      survivorMatches: {
+        include: {
+          survivor: true,
+          map: true,
+          perks: true,
+        },
+        orderBy: {
+          playedAt: "desc",
         },
       },
     },
@@ -32,12 +45,7 @@ export default async function MatchHistory() {
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <h1 className="text-2xl font-bold text-center">Match History</h1>
-      <div className="flex flex-col gap-4">
-        {matchHistory[0]?.matchs.map(async (match) => {
-          return <MatchCard match={match} key={match.id} />;
-        })}
-      </div>
+      <MatchHistoryClient matchHistory={matchHistory} />
     </div>
   );
-}
+};

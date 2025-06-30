@@ -6,8 +6,13 @@ import clsx from "clsx";
 
 const prisma = new PrismaClient();
 
-export default async function MatchCard(props: { match: Match }) {
+export const SurvivorMatchCard = async (props: { match: Match }) => {
   const { match } = props;
+  const survivor = await prisma.survivor.findUnique({
+    where: {
+      id: match.survivorId,
+    },
+  });
   const killer = await prisma.killer.findUnique({
     where: {
       id: match.killerId,
@@ -23,13 +28,19 @@ export default async function MatchCard(props: { match: Match }) {
       key={match.id}
       className={clsx(
         "p-4 shadow-md ",
-        match.killerWin
-          ? "bg-gradient-to-r from-slate-50/60 to-blue-200/60"
+        match.survivorWin
+          ? "bg-gradient-to-r from-slate-50/60 to-blue-200"
           : "bg-gradient-to-r from-slate-50/60 to-red-200"
       )}
     >
       <CardContent>
         <div className="flex flex-row justify-between items-center">
+          <Image
+            src={survivor.image}
+            alt={survivor.name}
+            width={150}
+            height={150}
+          />
           <Image
             src={killer.image}
             alt={killer.name}
@@ -39,7 +50,7 @@ export default async function MatchCard(props: { match: Match }) {
           <Image src={map?.image} alt={map?.name} width={150} height={150} />
         </div>
         <div className="flex flex-row justify-between px-6 py-2">
-          {match.killerPerks.map((perk) => (
+          {match.perks.map((perk) => (
             <div key={perk.id}>
               <Image
                 src={perk.image}
@@ -60,17 +71,7 @@ export default async function MatchCard(props: { match: Match }) {
               height={50}
               className="rounded-md"
             />
-            <p>{match.numberOfKills}</p>
-          </div>
-          <div className="flex flex-row gap-2 items-center">
-            <Image
-              src="/icon_hooks.png"
-              alt="hook"
-              width={50}
-              height={50}
-              className="rounded-md"
-            />
-            <p>{match.numberOfHooks}</p>
+            <p>{match.numberOfRescues}</p>
           </div>
           <div className="flex flex-row gap-2 items-center">
             <Image
@@ -80,7 +81,7 @@ export default async function MatchCard(props: { match: Match }) {
               height={50}
               className="rounded-md"
             />
-            <p>{match.numberOfGeneratorsRemaining}</p>
+            <p>{match.numberOfGeneratorsDone}</p>
           </div>
           <p>
             Score : <span className="font-bold">{match.score}</span>
@@ -89,4 +90,4 @@ export default async function MatchCard(props: { match: Match }) {
       </CardContent>
     </Card>
   );
-}
+};

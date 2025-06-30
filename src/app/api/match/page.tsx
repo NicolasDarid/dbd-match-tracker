@@ -4,6 +4,8 @@ import { PrismaClient } from "@/generated/prisma";
 import { MatchForm } from "@/components/matchForm";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const prisma = new PrismaClient();
 
@@ -32,13 +34,21 @@ export default async function AddMatch() {
         </div>
       </CardHeader>
       <CardContent>
-        <MatchForm
-          killers={killers}
-          survivors={survivors}
-          killerPerks={killerPerks}
-          survivorPerks={survivorPerks}
-          maps={maps}
-        />
+        <Suspense
+          fallback={
+            <div>
+              <Skeleton />
+            </div>
+          }
+        >
+          <MatchForm
+            killers={killers}
+            survivors={survivors}
+            killerPerks={killerPerks}
+            survivorPerks={survivorPerks}
+            maps={maps}
+          />
+        </Suspense>
       </CardContent>
     </Card>
   );

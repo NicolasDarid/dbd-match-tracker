@@ -3,7 +3,7 @@ import { getUser } from "@/lib/auth-session";
 import { LogIn } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import MatchHistory from "@/components/matchHistory";
+import { MatchHistory } from "@/components/matchHistory";
 import { Button } from "@/components/ui/button";
 
 export default async function Home() {
@@ -33,7 +33,7 @@ export default async function Home() {
         {user.image ? (
           <Image src={user.image} alt={user.name} width={100} height={100} />
         ) : null}
-        <Link href="/match/add">
+        <Link href="/api/match">
           <Button>Add Match</Button>
         </Link>
       </CardHeader>
