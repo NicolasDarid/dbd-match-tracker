@@ -70,6 +70,7 @@ model killer {
   name      String
   image     String?
   matches   killerMatch[]
+  addOns    killerAddOn[]
   survivorMatches survivorMatch[] @relation("killerMatches")
   matchHistory    matchHistory[]  
 }
@@ -79,6 +80,7 @@ model survivor {
   name      String
   image     String?
   matches   survivorMatch[]
+  teammates survivorMatch[] @relation("teammates")
   killerMatches killerMatch[] @relation("killerMatches")
   matchHistory    matchHistory[]
 }
@@ -95,6 +97,8 @@ model killerAddOn {
   name      String
   image     String?
   matches   killerMatch[] 
+  killer    killer?       @relation(fields: [killerId], references: [id])
+  killerId  String?
 }
 
 model killerOffering {
@@ -158,6 +162,7 @@ model survivorMatch {
   mapId     String
   survivor survivor @relation(fields: [survivorId], references: [id])
   playedAt DateTime @default(now())
+  teammates survivor[] @relation("teammates")
   perks survivorPerk[]
   addOns          survivorAddOn[]
   offerings       survivorOffering[]

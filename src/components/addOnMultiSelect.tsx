@@ -1,5 +1,4 @@
 "use client";
-import { Check, ChevronsUpDown } from "lucide-react";
 
 import {
   Command,
@@ -17,36 +16,39 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import Image from "next/image";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-interface Perk {
+interface AddOn {
   id: string;
   name: string;
   image: string;
 }
 
-interface PerkMultiSelectProps {
-  perks: Perk[];
-  value: Perk[];
-  onChange: (selected: Perk[]) => void;
+interface AddOnMultiSelectProps {
+  addOns: AddOn[];
+  value: AddOn[];
+  onChange: (selected: AddOn[]) => void;
+  text: string;
 }
 
-export function PerkMultiSelect({
-  perks,
-  value,
+export function AddOnMultiSelect({
+  addOns,
+  value = [],
   onChange,
-}: PerkMultiSelectProps) {
+  text,
+}: AddOnMultiSelectProps) {
   const [open, setOpen] = useState(false);
-  const togglePerk = (perk: Perk) => {
-    const isSelected = value.some((p) => p.id === perk.id);
+  const toggleAddOn = (addOn: AddOn) => {
+    const isSelected = value.some((a) => a.id === addOn.id);
     if (isSelected) {
-      onChange(value.filter((p) => p.id !== perk.id));
+      onChange(value.filter((a) => a.id !== addOn.id));
     } else {
-      onChange([...value, perk]);
+      onChange([...value, addOn]);
     }
   };
 
-  const removePerk = (perkId: string) => {
-    onChange(value.filter((p) => p.id !== perkId));
+  const removeAddOn = (addOnId: string) => {
+    onChange(value.filter((a) => a.id !== addOnId));
   };
 
   return (
@@ -60,31 +62,36 @@ export function PerkMultiSelect({
             className="w-full justify-between"
           >
             {value.length > 0
-              ? `${value.length} Perks selected`
-              : "Select Perks..."}
+              ? `${value.length} ${text} selected`
+              : `Select ${text}...`}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[300px] p-0">
           <Command>
-            <CommandInput placeholder="Search perks..." />
-            <CommandEmpty>No perks found.</CommandEmpty>
+            <CommandInput placeholder={`Search ${text}...`} />
+            <CommandEmpty>No {text} found.</CommandEmpty>
             <CommandGroup>
-              {perks.map((perk) => {
-                const isSelected = value.some((p) => p.id === perk.id);
+              {addOns.map((addOn) => {
+                const isSelected = value.some((a) => a.id === addOn.id);
                 return (
-                  <CommandItem key={perk.id} onSelect={() => togglePerk(perk)}>
-                    <Badge className="flex items-center gap-2 w-full">
-                      <div className="transform rotate-45 border-[1.5px] border-white overflow-hidden">
+                  <CommandItem
+                    key={addOn.id}
+                    onSelect={() => toggleAddOn(addOn)}
+                  >
+                    <Badge className="flex items-center gap-2 w-full cursor-pointer bg-amber-200/50 ">
+                      <div className="transform rotate-45 border-[1.5px] border-black overflow-hidden">
                         <Image
-                          src={perk.image}
-                          alt={perk.name}
+                          src={addOn.image}
+                          alt={addOn.name}
                           width={40}
                           height={40}
                           className="w-full h-full object-cover transform -rotate-45 scale-105"
                         />
                       </div>
-                      <span className="text-sm ml-2">{perk.name}</span>
+                      <span className="text-sm ml-2 text-black">
+                        {addOn.name}
+                      </span>
                       {isSelected && (
                         <Check className="h-4 w-4 text-green-600" />
                       )}
@@ -98,22 +105,22 @@ export function PerkMultiSelect({
       </Popover>
 
       {value.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-4 w-full justify-center items-center">
-          {value.map((perk) => (
+        <div className="flex flex-wrap gap-2 mt-4 w-full justify-center">
+          {value.map((addOn) => (
             <Badge
-              key={perk.id}
+              key={addOn.id}
               variant="secondary"
-              className="flex items-center gap-1 cursor-pointer bg-purple-200/50 px-4"
-              onClick={() => removePerk(perk.id)}
+              className="flex items-center gap-1 cursor-pointer bg-amber-200/50 px-4"
+              onClick={() => removeAddOn(addOn.id)}
             >
               <Image
-                src={perk.image}
-                alt={perk.name}
+                src={addOn.image}
+                alt={addOn.name}
                 width={40}
                 height={40}
                 className="w-full h-full object-cover"
               />
-              <span className="text-sm ml-2 text-black">{perk.name}</span>
+              <span className="text-sm ml-2 text-black">{addOn.name}</span>
             </Badge>
           ))}
         </div>

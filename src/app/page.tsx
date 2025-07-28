@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { MatchHistory } from "@/components/matchHistory";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function Home() {
   const user = await getUser();
@@ -29,16 +31,20 @@ export default async function Home() {
   return (
     <Card className="max-w-3xl mx-auto bg-gradient-to-l from-gray-200/40 to-gray-200/40 via-gray-300/40">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-center text-2xl">{user.name}</CardTitle>
+        <CardTitle className="font-roboto text-center text-2xl">
+          {user.name}
+        </CardTitle>
         {user.image ? (
           <Image src={user.image} alt={user.name} width={100} height={100} />
         ) : null}
         <Link href="/api/match">
-          <Button>Add Match</Button>
+          <Button className="font-roboto-condensed">Add Match</Button>
         </Link>
       </CardHeader>
       <CardContent>
-        <MatchHistory />
+        <Suspense fallback={<Skeleton className="h-[500px] w-full" />}>
+          <MatchHistory />
+        </Suspense>
       </CardContent>
     </Card>
   );

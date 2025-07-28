@@ -15,7 +15,7 @@ export default async function Header() {
   const user = await getUser();
 
   return (
-    <header className="flex items-center gap-4 px-4 py-2 border-b justify-between text-xl">
+    <header className="flex items-center gap-4 px-4 py-2 border-b border-red-950 justify-between text-xl">
       <Link href="/">
         <Image
           src={logo}
@@ -25,6 +25,9 @@ export default async function Header() {
           className="rounded-md"
         />
       </Link>
+      <h1 className="font-roboto text-4xl font-bold text-white text-shadow-red-900 text-shadow-lg">
+        DBD Match Tracker
+      </h1>
       <div>
         {user ? (
           <DropdownMenu>

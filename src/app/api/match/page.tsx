@@ -13,11 +13,19 @@ export default async function AddMatch() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const user = getRequiredUser();
 
-  const killers = await prisma.killer.findMany();
+  const killers = await prisma.killer.findMany({
+    include: {
+      addOns: true,
+    },
+  });
   const survivors = await prisma.survivor.findMany();
   const killerPerks = await prisma.killerPerk.findMany();
   const survivorPerks = await prisma.survivorPerk.findMany();
+  const killerAddOns = await prisma.killerAddOn.findMany();
+  const survivorAddOns = await prisma.survivorAddOn.findMany();
   const maps = await prisma.map.findMany();
+  const killerOffering = await prisma.killerOffering.findMany();
+  const survivorOffering = await prisma.survivorOffering.findMany();
 
   return (
     <Card className="max-w-4xl mx-auto">
@@ -46,7 +54,11 @@ export default async function AddMatch() {
             survivors={survivors}
             killerPerks={killerPerks}
             survivorPerks={survivorPerks}
+            killerAddOns={killerAddOns}
+            survivorAddOns={survivorAddOns}
             maps={maps}
+            killerOffering={killerOffering}
+            survivorOffering={survivorOffering}
           />
         </Suspense>
       </CardContent>

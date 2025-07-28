@@ -12,23 +12,26 @@ export const MatchHistory = async () => {
       userId: user?.id,
     },
     include: {
-      killerMatches: true,
       killerMatches: {
         include: {
           killer: true,
           map: true,
           perks: true,
+          addOns: true,
+          offerings: true,
         },
         orderBy: {
           playedAt: "desc",
         },
       },
-      survivorMatches: true,
       survivorMatches: {
         include: {
           survivor: true,
+          killer: true,
           map: true,
           perks: true,
+          addOns: true,
+          offerings: true,
         },
         orderBy: {
           playedAt: "desc",
