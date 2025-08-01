@@ -1,5 +1,7 @@
+"use client";
+
 import { SurvivorMatch } from "@/generated/prisma";
-import { Card, CardContent, CardFooter } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import clsx from "clsx";
 import { Loader, Trash } from "lucide-react";
@@ -33,121 +35,221 @@ export const SurvivorMatchCard = (props: { match: SurvivorMatch }) => {
       toast.error("Failed to delete match");
     }
   };
+
   return (
     <Card
       key={match.id}
       className={clsx(
-        "p-4 shadow-md border-2 border-red-950",
+        "p-4 rounded-xl shadow-lg shadow-black/50 border border-blue-800/30 font-roboto text-white transition-all duration-300",
         match.survivorWin
-          ? "bg-gradient-to-r from-slate-50/60 to-blue-200"
-          : "bg-gradient-to-r from-slate-50/60 to-red-200"
+          ? "bg-gradient-to-br from-zinc-900 via-black to-blue-950/40 hover:shadow-blue-900/40"
+          : "bg-gradient-to-br from-zinc-900 via-black to-red-950/40 hover:shadow-red-900/40"
       )}
     >
       <CardContent>
-        <div className="flex flex-row justify-between items-center">
-          <Image
-            src={match.survivor.image || ""}
-            alt={match.survivor.name}
-            width={150}
-            height={150}
-          />
-          <Image
-            src={match.killer.image || ""}
-            alt={match.killer.name}
-            width={150}
-            height={150}
-          />
-          <Image
-            src={match.map.image || ""}
-            alt={match.map.name}
-            width={150}
-            height={150}
-          />
+        <div className="flex flex-row justify-between items-center mb-4">
+          <div className="text-2xl tracking-widest font-bold text-blue-600 uppercase">
+            {match.survivor.name}
+          </div>
+          <div className="text-2xl tracking-widest font-bold text-red-600 uppercase">
+            {match.killer.name}
+          </div>
+          <div className="flex justify-end">
+            <Button
+              disabled={isLoading}
+              onClick={() => {
+                handleDelete(match.id, "survivor");
+              }}
+              variant={"destructive"}
+              className="flex gap-2 items-center cursor-pointer"
+            >
+              {isLoading ? (
+                <Loader className="animate-spin w-4 h-4" />
+              ) : (
+                <Trash className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-row justify-between px-6 py-2">
-          {match.perks.map((perk) => (
-            <div key={perk.id}>
+
+        <div className="flex flex-row justify-between items-center">
+          {match.survivor.image ? (
+            <Image
+              src={match.survivor.image}
+              alt={match.survivor.name}
+              width={100}
+              height={100}
+              className="rounded-md border border-blue-900 shadow-inner"
+            />
+          ) : (
+            <div>
               <Image
-                src={perk.image}
-                alt={perk.name}
-                width={75}
-                height={75}
-                className="rounded-md bg-purple-900 border-2 border-black"
+                src="/Loading_survivor.webp"
+                alt={match.survivor.name}
+                width={100}
+                height={100}
+                className="rounded-md border border-blue-900 shadow-inner"
               />
             </div>
-          ))}
+          )}
+          {match.killer.image ? (
+            <Image
+              src={match.killer.image}
+              alt={match.killer.name}
+              width={100}
+              height={100}
+              className="rounded-md border border-red-900 shadow-inner"
+            />
+          ) : (
+            <div>
+              <Image
+                src="/Loading_killer.webp"
+                alt={match.killer.name}
+                width={100}
+                height={100}
+                className="rounded-md border border-red-900 shadow-inner"
+              />
+            </div>
+          )}
+          {match.map.image ? (
+            <Image
+              src={match.map.image}
+              alt={match.map.name}
+              width={100}
+              height={100}
+              className="rounded-md border border-green-900 shadow-inner"
+            />
+          ) : (
+            <div>
+              <Image
+                src="/Placeholder_maps.webp"
+                alt={match.map.name}
+                width={100}
+                height={100}
+                className="rounded-md border border-green-900 shadow-inner"
+              />
+              <span>{match.map.name}</span>
+            </div>
+          )}
         </div>
-        <div className="flex flex-row justify-between items-center mt-4">
+
+        <div className="flex justify-between items-start mt-4 gap-6">
+          <div className="grid grid-cols-2 gap-2">
+            {match.perks.map((perk) =>
+              perk.image ? (
+                <div key={perk.id} className="flex flex-col items-center">
+                  <Image
+                    src={perk.image}
+                    alt={perk.name}
+                    width={60}
+                    height={60}
+                    className="rounded-sm border border-purple-900 shadow-md shadow-black/60"
+                  />
+                  <span>{perk.name}</span>
+                </div>
+              ) : (
+                <div key={perk.id} className="flex flex-col items-center">
+                  <Image
+                    src="/Placeholder_perks.webp"
+                    alt={perk.name}
+                    width={60}
+                    height={60}
+                    className="rounded-sm border border-purple-900 shadow-md shadow-black/60"
+                  />
+                  <span>{perk.name}</span>
+                </div>
+              )
+            )}
+          </div>
+
           {match.addOns?.length > 0 && (
-            <div className="flex flex-row gap-2 items-center">
-              {match.addOns.map((addOn) => (
-                <div key={addOn.id}>
-                  <Image
-                    src={addOn.image}
-                    alt={addOn.name}
-                    width={75}
-                    height={75}
-                    className="rounded-md bg-amber-200/50 border-2 border-black"
-                  />
-                </div>
-              ))}
+            <div className="flex flex-col gap-2">
+              {match.addOns.map((addOn) =>
+                addOn.image ? (
+                  <div key={addOn.id} className="flex flex-col items-center">
+                    <Image
+                      src={addOn.image}
+                      alt={addOn.name}
+                      width={60}
+                      height={60}
+                      className="rounded-sm border border-amber-500/30 bg-amber-100/10 shadow"
+                    />
+                    <span>{addOn.name}</span>
+                  </div>
+                ) : (
+                  <div key={addOn.id} className="flex flex-col items-center">
+                    <Image
+                      src="/Placeholder_addOns.webp"
+                      alt={addOn.name}
+                      width={60}
+                      height={60}
+                      className="rounded-sm border border-amber-500/30 bg-amber-100/10 shadow"
+                    />
+                    <span>{addOn.name}</span>
+                  </div>
+                )
+              )}
             </div>
           )}
+
           {match.offerings?.length > 0 && (
-            <div className="flex flex-row gap-2 items-center">
-              {match.offerings.map((offering) => (
-                <div key={offering.id}>
-                  <Image
-                    src={offering.image}
-                    alt={offering.name}
-                    width={75}
-                    height={75}
-                    className="rounded-md bg-green-200 border-2 border-black"
-                  />
-                </div>
-              ))}
+            <div className="flex flex-col gap-2">
+              {match.offerings.map((offering) =>
+                offering.image ? (
+                  <div key={offering.id} className="flex flex-col items-center">
+                    <Image
+                      src={offering.image}
+                      alt={offering.name}
+                      width={60}
+                      height={60}
+                      className="rounded-sm border border-green-600/30 bg-green-300/10 shadow"
+                    />
+                    <span>{offering.name}</span>
+                  </div>
+                ) : (
+                  <div key={offering.id} className="flex flex-col items-center">
+                    <Image
+                      src="/Placeholder_offerings.webp"
+                      alt={offering.name}
+                      width={60}
+                      height={60}
+                      className="rounded-sm border border-green-600/30 bg-green-300/10 shadow"
+                    />
+                    <span>{offering.name}</span>
+                  </div>
+                )
+              )}
             </div>
           )}
         </div>
-        <div className="flex flex-row justify-between items-center mt-4">
-          <div className="flex flex-row gap-2 items-center">
+
+        <div className="grid grid-cols-3 gap-4 mt-6 text-center text-sm font-semibold items-center">
+          <div className="flex flex-col items-center">
             <Image
               src="/icon_sacrifices.png"
-              alt="sacrifices"
-              width={50}
-              height={50}
+              alt="rescues"
+              width={40}
+              height={40}
               className="rounded-md"
             />
-            <p>{match.numberOfRescues}</p>
+            <p className="text-green-400">{match.numberOfRescues}</p>
           </div>
-          <div className="flex flex-row gap-2 items-center">
+          <div className="flex flex-col items-center">
             <Image
               src="/icon_generators.png"
               alt="generator"
-              width={50}
-              height={50}
+              width={40}
+              height={40}
               className="rounded-md"
             />
-            <p>{match.numberOfGeneratorsDone}</p>
+            <p className="text-blue-400">{match.numberOfGeneratorsDone}</p>
           </div>
-          <p>
-            Score : <span className="font-bold">{match.score}</span>
-          </p>
+          <div className="flex flex-col items-center">
+            <span className="text-gray-300">Score</span>
+            <p className="text-green-500">{match.score}</p>
+          </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <div className="flex justify-end m-auto w-full">
-          <Button
-            disabled={isLoading}
-            onClick={() => {
-              handleDelete(match.id, "survivor");
-            }}
-            variant={"destructive"}
-          >
-            {isLoading ? <Loader className="animate-spin" /> : <Trash />}
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 };

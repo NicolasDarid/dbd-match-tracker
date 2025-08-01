@@ -7,23 +7,7 @@ import { Button } from "./ui/button";
 import clsx from "clsx";
 import { Input } from "./ui/input";
 import { motion, AnimatePresence } from "framer-motion";
-
-function useDebounceValue<T>(value: T, delay = 1000) {
-  const [debounceState, setDebounceState] = useState<T>(value);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebounceState(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
-
-  return debounceState;
-}
+import { useDebounceValue } from "@/lib/utils-client";
 
 export const MatchHistoryClient = ({
   matchHistory,
@@ -34,7 +18,7 @@ export const MatchHistoryClient = ({
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="flex flex-row gap-4 w-full justify-center">
+      <div className="flex min-lg:flex-row max-md:flex-col gap-4 w-full justify-center">
         <Button
           onClick={() => setSide(true)}
           variant="outline"
@@ -54,7 +38,7 @@ export const MatchHistoryClient = ({
             {
               "bg-blue-300": !side,
             },
-            "font-roboto text-xl"
+            "font-roboto text-xl "
           )}
         >
           Survivor Match History
@@ -90,7 +74,7 @@ const KillerMatchHistory = ({ matches }: { matches: KillerMatch[] }) => {
   return (
     <div className="flex flex-col gap-6 w-full">
       <motion.h1
-        className="font-roboto text-3xl font-bold text-center"
+        className="font-roboto text-3xl font-bold text-center text-white"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -163,7 +147,7 @@ const SurvivorMatchHistory = ({ matches }: { matches: SurvivorMatch[] }) => {
   return (
     <div className="flex flex-col gap-6 w-full">
       <motion.h1
-        className="font-roboto text-3xl font-bold text-center"
+        className="font-roboto text-3xl font-bold text-center text-white"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}

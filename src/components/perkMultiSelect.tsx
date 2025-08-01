@@ -28,12 +28,14 @@ interface PerkMultiSelectProps {
   perks: Perk[];
   value: Perk[];
   onChange: (selected: Perk[]) => void;
+  maxSelections?: number;
 }
 
 export function PerkMultiSelect({
   perks,
   value,
   onChange,
+  maxSelections,
 }: PerkMultiSelectProps) {
   const [open, setOpen] = useState(false);
   const togglePerk = (perk: Perk) => {
@@ -41,6 +43,10 @@ export function PerkMultiSelect({
     if (isSelected) {
       onChange(value.filter((p) => p.id !== perk.id));
     } else {
+      // Vérifier si on a atteint la limite maximale
+      if (maxSelections && value.length >= maxSelections) {
+        return; // Ne pas ajouter si la limite est atteinte
+      }
       onChange([...value, perk]);
     }
   };
@@ -60,7 +66,9 @@ export function PerkMultiSelect({
             className="w-full justify-between"
           >
             {value.length > 0
-              ? `${value.length} Perks selected`
+              ? `${value.length}${
+                  maxSelections ? `/${maxSelections}` : ""
+                } Perks selected`
               : "Select Perks..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -69,20 +77,44 @@ export function PerkMultiSelect({
           <Command>
             <CommandInput placeholder="Search perks..." />
             <CommandEmpty>No perks found.</CommandEmpty>
-            <CommandGroup>
+            <CommandGroup className="h-106 cursor-pointer">
               {perks.map((perk) => {
                 const isSelected = value.some((p) => p.id === perk.id);
+                const isDisabled =
+                  maxSelections && value.length >= maxSelections && !isSelected;
                 return (
-                  <CommandItem key={perk.id} onSelect={() => togglePerk(perk)}>
-                    <Badge className="flex items-center gap-2 w-full">
+                  <CommandItem
+                    key={perk.id}
+                    onSelect={() => togglePerk(perk)}
+                    className={
+                      isDisabled
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }
+                  >
+                    <Badge
+                      className={`flex items-center gap-2 w-full ${
+                        isDisabled ? "opacity-50" : ""
+                      }`}
+                    >
                       <div className="transform rotate-45 border-[1.5px] border-white overflow-hidden">
-                        <Image
-                          src={perk.image}
-                          alt={perk.name}
-                          width={40}
-                          height={40}
-                          className="w-full h-full object-cover transform -rotate-45 scale-105"
-                        />
+                        {perk.image ? (
+                          <Image
+                            src={perk.image}
+                            alt={perk.name}
+                            width={50}
+                            height={50}
+                            className="transform rotate-315"
+                          />
+                        ) : (
+                          <Image
+                            src="/Placeholder_perks.webp"
+                            alt={perk.name}
+                            width={50}
+                            height={50}
+                            className="transform rotate-315"
+                          />
+                        )}
                       </div>
                       <span className="text-sm ml-2">{perk.name}</span>
                       {isSelected && (
@@ -106,13 +138,21 @@ export function PerkMultiSelect({
               className="flex items-center gap-1 cursor-pointer bg-purple-200/50 px-4"
               onClick={() => removePerk(perk.id)}
             >
-              <Image
-                src={perk.image}
-                alt={perk.name}
-                width={40}
-                height={40}
-                className="w-full h-full object-cover"
-              />
+              {perk.image ? (
+                <Image
+                  src={perk.image}
+                  alt={perk.name}
+                  width={50}
+                  height={50}
+                />
+              ) : (
+                <Image
+                  src="/Placeholder_perks.webp"
+                  alt={perk.name}
+                  width={50}
+                  height={50}
+                />
+              )}
               <span className="text-sm ml-2 text-black">{perk.name}</span>
             </Badge>
           ))}

@@ -15,20 +15,33 @@ export default async function Header() {
   const user = await getUser();
 
   return (
-    <header className="flex items-center gap-4 px-4 py-2 border-b border-red-950 justify-between text-xl">
-      <Link href="/">
-        <Image
-          src={logo}
-          alt="logo"
-          width={64}
-          height={64}
-          className="rounded-md"
-        />
-      </Link>
-      <h1 className="font-roboto text-4xl font-bold text-white text-shadow-red-900 text-shadow-lg">
+    <header className="relative flex items-center gap-4 px-4 py-2 border-b border-red-950 justify-between text-xl">
+      <div className="flex flex-row gap-4 items-center">
+        <Link href="/" className="cursor-pointer">
+          <Image
+            src={logo}
+            alt="logo"
+            width={64}
+            height={64}
+            className="rounded-md"
+          />
+        </Link>
+        <Link href="/" className="cursor-pointer">
+          <Button className="cursor-pointer">History</Button>
+        </Link>
+        <Link href="/auth/stats/killer" className="cursor-pointer">
+          <Button className="cursor-pointer">Killer Stats</Button>
+        </Link>
+        <Link href="/auth/stats/survivor" className="cursor-pointer">
+          <Button className="cursor-pointer">Survivor Stats</Button>
+        </Link>
+      </div>
+
+      <h1 className="max-sm:hidden min-lg:absolute min-lg:left-1/2 min-lg:top-1/2 min-lg:-translate-x-1/2 min-lg:-translate-y-1/2 font-roboto text-4xl font-bold text-white text-shadow-red-900 text-shadow-lg">
         DBD Match Tracker
       </h1>
-      <div>
+
+      <>
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -51,7 +64,7 @@ export default async function Header() {
             Sign In
           </Link>
         )}
-      </div>
+      </>
     </header>
   );
 }

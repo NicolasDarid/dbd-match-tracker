@@ -32,6 +32,7 @@ export const MatchHistory = async () => {
           perks: true,
           addOns: true,
           offerings: true,
+          survivorObject: true,
         },
         orderBy: {
           playedAt: "desc",

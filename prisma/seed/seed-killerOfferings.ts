@@ -1,0 +1,91 @@
+import { PrismaClient } from "@/generated/prisma";
+
+const prisma = new PrismaClient();
+
+const killerOfferings = [
+  { name: "Bloody Party Streamers", image: null },
+  { name: "Hollow Shell", image: null },
+  { name: "Sealed Envelope", image: null },
+  { name: "Survivor Pudding", image: null },
+  { name: "Coconut Scream Pie", image: null },
+  { name: "Frightful Flan", image: null },
+  { name: "Ghastly Gateau", image: null },
+  { name: "Gruesome Gateau", image: null },
+  { name: "Sacrificial Cake", image: null },
+  { name: "Screech Cobbler", image: null },
+  { name: "Terrormisu", image: null },
+  { name: "Tanager Wreath", image: null },
+  { name: "Devout Tanager Wreath", image: null },
+  { name: "Ardent Tanager Wreath", image: null },
+  { name: "Raven Wreath", image: null },
+  { name: "Devout Raven Wreath", image: null },
+  { name: "Ardent Raven Wreath", image: null },
+  { name: "Spotted Owl Wreath", image: null },
+  { name: "Devout Spotted Owl Wreath", image: null },
+  { name: "Ardent Spotted Owl Wreath", image: null },
+  { name: "Shrike Wreath", image: null },
+  { name: "Devout Shrike Wreath", image: null },
+  { name: "Ardent Shrike Wreath", image: null },
+  { name: "Bloodied Blueprint", image: null },
+  { name: "Torn Blueprint", image: null },
+  { name: "Scratched Coin", image: null },
+  { name: "Tarnished Coin", image: null },
+  { name: "Cut Coin", image: null },
+  { name: "Shiny Coin", image: null },
+  { name: "Clear Reagent", image: null },
+  { name: "Faint Reagent", image: null },
+  { name: "Hazy Reagent", image: null },
+  { name: "Murky Reagent", image: null },
+  { name: "Annotated Blueprint", image: null },
+  { name: "Vigo's Blueprint", image: null },
+  { name: "Mouldy Oak", image: null },
+  { name: "Rotten Oak", image: null },
+  { name: "Petrified Oak", image: null },
+  { name: "Putrid Oak", image: null },
+  { name: "Ivory Memento Mori", image: null },
+  { name: "Ebony Memento Mori", image: null },
+  { name: "Azarov's Key", image: null },
+  { name: "Grandma's Cookbook", image: null },
+  { name: "Heart Locket", image: null },
+  { name: "Charred Wedding Photograph", image: null },
+  { name: "Beef Tallow Mixture", image: null },
+  { name: "Airlock Doors", image: null },
+  { name: "Alien Flora", image: null },
+  { name: "Crow's eye", image: null },
+  { name: "Jigsaw Piece", image: null },
+  { name: "Shattered Bottle", image: null },
+  { name: "Strode Realty Key", image: null },
+  { name: "Hawkins National Laboratory ID", image: null },
+  { name: "Shattered Glasses", image: null },
+  { name: "MacMillan's Phalanx Bone", image: null },
+  { name: "Damaged Photo", image: null },
+  { name: "RPD Badge", image: null },
+  { name: "The Last Mask", image: null },
+  { name: "Mary's Letter", image: null },
+  { name: "The Pied Piper", image: null },
+  { name: "Ichorous Loam", image: null },
+  { name: "Yamaoka Family Crest", image: null },
+  { name: "Sacrificial Ward", image: null },
+  { name: "Black Ward", image: null },
+  { name: "White Ward", image: null },
+];
+
+async function main() {
+  for (const offering of killerOfferings) {
+    await prisma.killerOffering.create({
+      data: offering,
+    });
+    console.log(`✅ Added offering: ${offering.name}`);
+  }
+}
+
+main()
+  .then(() => {
+    console.log("🎉 All killer offerings inserted.");
+    prisma.$disconnect();
+  })
+  .catch((e) => {
+    console.error("❌ Error inserting killer offerings:", e);
+    prisma.$disconnect();
+    process.exit(1);
+  });

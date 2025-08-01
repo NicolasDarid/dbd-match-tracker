@@ -49,12 +49,21 @@ export const SurvivorSelectorGroup = ({
                     {survivors.map((survivor) => (
                       <SelectItem key={survivor.id} value={survivor.id}>
                         <div className="flex items-center gap-2">
-                          <Image
-                            src={survivor.image}
-                            alt={survivor.name}
-                            width={32}
-                            height={32}
-                          />
+                          {survivor.image ? (
+                            <Image
+                              src={survivor.image}
+                              alt={survivor.name}
+                              width={50}
+                              height={50}
+                            />
+                          ) : (
+                            <Image
+                              src="/Loading_survivor.webp"
+                              alt={survivor.name}
+                              width={50}
+                              height={50}
+                            />
+                          )}
                           {survivor.name}
                         </div>
                       </SelectItem>
@@ -76,7 +85,7 @@ export const SurvivorSelectorGroup = ({
           <FormField
             key={index}
             control={control}
-            name={`survivorsIds.${index}`}
+            name={`teammatesIds.${index}`}
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-lg font-bold">
@@ -92,12 +101,21 @@ export const SurvivorSelectorGroup = ({
                     {survivors.map((survivor) => (
                       <SelectItem key={survivor.id} value={survivor.id}>
                         <div className="flex items-center gap-2">
-                          <Image
-                            src={survivor.image}
-                            alt={survivor.name}
-                            width={32}
-                            height={32}
-                          />
+                          {survivor.image ? (
+                            <Image
+                              src={survivor.image}
+                              alt={survivor.name}
+                              width={50}
+                              height={50}
+                            />
+                          ) : (
+                            <Image
+                              src="/Loading_survivor.webp"
+                              alt={survivor.name}
+                              width={50}
+                              height={50}
+                            />
+                          )}
                           {survivor.name}
                         </div>
                       </SelectItem>

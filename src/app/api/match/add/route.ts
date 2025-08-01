@@ -18,6 +18,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid data" }, { status: 400 });
   }
 
+  const perkIds: string[] = match.perks || [];
+  const perkComboKey =
+    perkIds.length === 4 ? perkIds.slice().sort().join("_") : null;
+
   const matchHistory = await prisma.matchHistory.findUnique({
     where: {
       userId: user?.id,
@@ -49,11 +53,8 @@ export async function POST(request: NextRequest) {
             id: match.mapId,
           },
         },
-        survivors: {
-          connect: match.survivorsIds.map((id) => ({
-            id,
-          })),
-        },
+
+        perkComboKey: perkComboKey ?? "none",
         perks: {
           connect: match.perks.map((id) => ({
             id,
@@ -84,53 +85,79 @@ export async function POST(request: NextRequest) {
   }
 
   if (side === "survivor") {
-    await prisma.survivorMatch.create({
-      data: {
-        survivor: {
-          connect: {
-            id: match.survivorId,
-          },
+    const survivorMatchData: {
+      survivor: { connect: { id: string } };
+      killer: { connect: { id: string } };
+      map: { connect: { id: string } };
+      perks: { connect: { id: string }[] };
+      offerings: { connect: { id: string }[] };
+      numberOfRescues: number;
+      numberOfGeneratorsDone: number;
+      score: number;
+      matchHistory: { connect: { id: string } };
+      survivorWin: boolean;
+      survivorObject?: { connect: { id: string } };
+      addOns?: { connect: { id: string }[] };
+      perkComboKey: string;
+    } = {
+      survivor: {
+        connect: {
+          id: match.survivorId,
         },
-        killer: {
-          connect: {
-            id: match.killerId,
-          },
-        },
-        map: {
-          connect: {
-            id: match.mapId,
-          },
-        },
-        teammates: {
-          connect: match.survivorsIds.map((id) => ({
-            id,
-          })),
-        },
-        perks: {
-          connect: match.perks.map((id) => ({
-            id,
-          })),
-        },
-        addOns: {
-          connect: match.addOns.map((id) => ({
-            id,
-          })),
-        },
-        offerings: {
-          connect: match.offering.map((id) => ({
-            id,
-          })),
-        },
-        numberOfRescues: match.numberOfRescues,
-        numberOfGeneratorsDone: match.numberOfGeneratorsDone,
-        score: match.score,
-        matchHistory: {
-          connect: {
-            id: matchHistory.id,
-          },
-        },
-        survivorWin: match.escaped,
       },
+      killer: {
+        connect: {
+          id: match.killerId,
+        },
+      },
+      map: {
+        connect: {
+          id: match.mapId,
+        },
+      },
+
+      perks: {
+        connect: match.perks.map((id) => ({
+          id,
+        })),
+      },
+      offerings: {
+        connect: match.offerings.map((id) => ({
+          id,
+        })),
+      },
+      perkComboKey: perkComboKey ?? "none",
+      numberOfRescues: match.numberOfRescues,
+      numberOfGeneratorsDone: match.numberOfGeneratorsDone,
+      score: match.score,
+      matchHistory: {
+        connect: {
+          id: matchHistory.id,
+        },
+      },
+      survivorWin: match.escaped,
+    };
+
+    // Ajouter survivorObject seulement s'il est fourni
+    if (match.objectId) {
+      survivorMatchData.survivorObject = {
+        connect: {
+          id: match.objectId,
+        },
+      };
+    }
+
+    // Ajouter addOns seulement s'ils sont fournis
+    if (match.addOns && match.addOns.length > 0) {
+      survivorMatchData.addOns = {
+        connect: match.addOns.map((id) => ({
+          id,
+        })),
+      };
+    }
+
+    await prisma.survivorMatch.create({
+      data: survivorMatchData,
     });
   }
 

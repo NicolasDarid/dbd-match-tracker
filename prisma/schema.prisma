@@ -80,8 +80,6 @@ model survivor {
   name      String
   image     String?
   matches   survivorMatch[]
-  teammates survivorMatch[] @relation("teammates")
-  killerMatches killerMatch[] @relation("killerMatches")
   matchHistory    matchHistory[]
 }
 
@@ -108,6 +106,14 @@ model killerOffering {
   matches   killerMatch[]
 }
 
+model survivorObject {
+  id        String   @id @default(uuid())
+  name String
+  image String?
+  matches survivorMatch[]
+  addOns survivorAddOn[]
+}
+
 model survivorPerk {
   id        String   @id @default(uuid())
   name      String
@@ -119,6 +125,8 @@ model survivorAddOn {
   id        String   @id @default(uuid())
   name      String
   image     String?
+  objectId String
+  survivorObject survivorObject @relation(fields: [objectId], references: [id])
   matches   survivorMatch[] 
 }
 
@@ -132,6 +140,7 @@ model survivorOffering {
 model map {
   id        String   @id @default(uuid())
   name      String
+  estate    String  @default("Estate")
   image     String?
   killerMatches   killerMatch[] @relation("maps")
   survivorMatches survivorMatch[] @relation("maps")
@@ -147,13 +156,13 @@ model killerMatch {
   addOns          killerAddOn[]
   offerings       killerOffering[]
   map             map      @relation("maps", fields: [mapId], references: [id])
-  survivors       survivor[] @relation("killerMatches")
   numberOfKills Int
   numberOfHooks Int
   numberOfGeneratorsRemaining Int
   score Int
   killerWin Boolean
   matchHistory    matchHistory[] @relation("matchHistoryKiller")
+  perkComboKey    String? @default("none")
 }
 
 model survivorMatch {
@@ -162,7 +171,6 @@ model survivorMatch {
   mapId     String
   survivor survivor @relation(fields: [survivorId], references: [id])
   playedAt DateTime @default(now())
-  teammates survivor[] @relation("teammates")
   perks survivorPerk[]
   addOns          survivorAddOn[]
   offerings       survivorOffering[]
@@ -174,6 +182,9 @@ model survivorMatch {
   score Int
   survivorWin Boolean
   matchHistory    matchHistory[] @relation("matchHistorySurvivor")
+  objectId String?
+  survivorObject survivorObject? @relation(fields: [objectId], references: [id])
+  perkComboKey    String? @default("none")
 }
 
 model matchHistory {

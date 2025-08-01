@@ -4,28 +4,21 @@ import { PrismaClient } from "@/generated/prisma";
 import { MatchForm } from "@/components/matchForm";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const prisma = new PrismaClient();
 
 export default async function AddMatch() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const user = getRequiredUser();
+  const user = await getRequiredUser();
 
-  const killers = await prisma.killer.findMany({
-    include: {
-      addOns: true,
-    },
-  });
+  const killers = await prisma.killer.findMany();
   const survivors = await prisma.survivor.findMany();
   const killerPerks = await prisma.killerPerk.findMany();
   const survivorPerks = await prisma.survivorPerk.findMany();
-  const killerAddOns = await prisma.killerAddOn.findMany();
-  const survivorAddOns = await prisma.survivorAddOn.findMany();
   const maps = await prisma.map.findMany();
   const killerOffering = await prisma.killerOffering.findMany();
   const survivorOffering = await prisma.survivorOffering.findMany();
+  const survivorObjects = await prisma.survivorObject.findMany();
 
   return (
     <Card className="max-w-4xl mx-auto">
@@ -42,25 +35,16 @@ export default async function AddMatch() {
         </div>
       </CardHeader>
       <CardContent>
-        <Suspense
-          fallback={
-            <div>
-              <Skeleton />
-            </div>
-          }
-        >
-          <MatchForm
-            killers={killers}
-            survivors={survivors}
-            killerPerks={killerPerks}
-            survivorPerks={survivorPerks}
-            killerAddOns={killerAddOns}
-            survivorAddOns={survivorAddOns}
-            maps={maps}
-            killerOffering={killerOffering}
-            survivorOffering={survivorOffering}
-          />
-        </Suspense>
+        <MatchForm
+          killers={killers}
+          survivors={survivors}
+          killerPerks={killerPerks}
+          survivorPerks={survivorPerks}
+          survivorObjects={survivorObjects}
+          maps={maps}
+          killerOffering={killerOffering}
+          survivorOffering={survivorOffering}
+        />
       </CardContent>
     </Card>
   );

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Roboto_Condensed } from "next/font/google";
 import { Toaster } from "sonner";
 import Header from "@/components/header";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,11 +35,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${robotoCondensed.variable} antialiased bg-black`}
       >
-        <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full p-4 ">
-          <Header />
-          <main className="px-4">{children}</main>
-          <Toaster />
-        </div>
+        <Providers>
+          <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full p-4 ">
+            <Header />
+            <main className="px-4">{children}</main>
+            <Toaster />
+          </div>
+        </Providers>
       </body>
     </html>
   );
