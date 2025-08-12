@@ -162,6 +162,40 @@ export const SurvivorMatchCard = (props: { match: SurvivorMatch }) => {
             )}
           </div>
 
+          {match.survivorObject && (
+            <div className="flex flex-col gap-2">
+              {match.survivorObject.image ? (
+                <div
+                  key={match.survivorObject.id}
+                  className="flex flex-col items-center"
+                >
+                  <Image
+                    src={match.survivorObject.image}
+                    alt={match.survivorObject.name}
+                    width={60}
+                    height={60}
+                    className="rounded-sm border border-amber-500/30 bg-amber-100/10 shadow"
+                  />
+                  <span>{match.survivorObject.name}</span>
+                </div>
+              ) : (
+                <div
+                  key={match.survivorObject.id}
+                  className="flex flex-col items-center"
+                >
+                  <Image
+                    src="/Placeholder_objects.webp"
+                    alt={match.survivorObject.name}
+                    width={60}
+                    height={60}
+                    className="rounded-sm border border-amber-500/30 bg-amber-100/10 shadow"
+                  />
+                  <span>{match.survivorObject.name}</span>
+                </div>
+              )}
+            </div>
+          )}
+
           {match.addOns?.length > 0 && (
             <div className="flex flex-col gap-2">
               {match.addOns.map((addOn) =>
@@ -223,13 +257,13 @@ export const SurvivorMatchCard = (props: { match: SurvivorMatch }) => {
           )}
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mt-6 text-center text-sm font-semibold items-center">
+        <div className="grid grid-cols-3 gap-4 mt-6 text-center text-lg font-semibold items-center">
           <div className="flex flex-col items-center">
             <Image
-              src="/icon_sacrifices.png"
+              src="/icon_saves.png"
               alt="rescues"
-              width={40}
-              height={40}
+              width={50}
+              height={50}
               className="rounded-md"
             />
             <p className="text-green-400">{match.numberOfRescues}</p>
@@ -238,14 +272,14 @@ export const SurvivorMatchCard = (props: { match: SurvivorMatch }) => {
             <Image
               src="/icon_generators.png"
               alt="generator"
-              width={40}
-              height={40}
+              width={50}
+              height={50}
               className="rounded-md"
             />
             <p className="text-blue-400">{match.numberOfGeneratorsDone}</p>
           </div>
-          <div className="flex flex-col items-center">
-            <span className="text-gray-300">Score</span>
+          <div className="flex flex-col items-center text-lg">
+            <span className="text-gray-300 ">Score</span>
             <p className="text-green-500">{match.score}</p>
           </div>
         </div>
