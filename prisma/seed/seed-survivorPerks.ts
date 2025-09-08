@@ -165,11 +165,10 @@ const survivorPerks = [
 
 async function main() {
   for (const name of survivorPerks) {
-    await prisma.survivorPerk.create({
-      data: {
-        name,
-        image: null,
-      },
+    await prisma.survivorPerk.upsert({
+      where: { name },
+      update: { name, image: null },
+      create: { name, image: null },
     });
     console.log(`✅ Added: ${name}`);
   }

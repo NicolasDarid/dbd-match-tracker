@@ -80,8 +80,10 @@ const survivorOfferings = [
 
 async function main() {
   for (const offering of survivorOfferings) {
-    await prisma.survivorOffering.create({
-      data: offering,
+    await prisma.survivorOffering.upsert({
+      where: { name: offering.name },
+      update: { name: offering.name, image: null },
+      create: { name: offering.name, image: null },
     });
     console.log(`✅ Added offering: ${offering.name}`);
   }

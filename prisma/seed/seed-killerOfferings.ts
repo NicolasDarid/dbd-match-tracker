@@ -72,8 +72,10 @@ const killerOfferings = [
 
 async function main() {
   for (const offering of killerOfferings) {
-    await prisma.killerOffering.create({
-      data: offering,
+    await prisma.killerOffering.upsert({
+      where: { name: offering.name },
+      update: offering,
+      create: offering,
     });
     console.log(`✅ Added offering: ${offering.name}`);
   }

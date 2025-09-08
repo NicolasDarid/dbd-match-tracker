@@ -138,11 +138,10 @@ const killerPerks = [
 
 async function main() {
   for (const name of killerPerks) {
-    await prisma.killerPerk.create({
-      data: {
-        name,
-        image: null, // ou une URL si tu veux les remplir plus tard
-      },
+    await prisma.killerPerk.upsert({
+      where: { name },
+      update: { name, image: null },
+      create: { name, image: null },
     });
     console.log(`✅ Added: ${name}`);
   }

@@ -41,11 +41,10 @@ const maps = [
 
 async function main() {
   for (const name of maps) {
-    await prisma.map.create({
-      data: {
-        name,
-        image: null, // ou une URL si tu veux les remplir plus tard
-      },
+    await prisma.map.upsert({
+      where: { name },
+      update: { name, image: null },
+      create: { name, image: null },
     });
     console.log(`✅ Added: ${name}`);
   }

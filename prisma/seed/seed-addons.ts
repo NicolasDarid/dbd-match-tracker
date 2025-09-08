@@ -900,8 +900,16 @@ async function main() {
 
     for (const addOnName of addOns) {
       try {
-        await prisma.killerAddOn.create({
-          data: {
+        await prisma.killerAddOn.upsert({
+          where: {
+            name: addOnName,
+          },
+          update: {
+            name: addOnName,
+            image: null,
+            killerId: killer.id,
+          },
+          create: {
             name: addOnName,
             image: null, // Vous pouvez ajouter des URLs d'images plus tard
             killerId: killer.id,

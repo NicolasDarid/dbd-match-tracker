@@ -14,8 +14,10 @@ const survivorObjects = [
 
 async function main() {
   for (const object of survivorObjects) {
-    await prisma.survivorObject.create({
-      data: object,
+    await prisma.survivorObject.upsert({
+      where: { name: object.name },
+      update: object,
+      create: object,
     });
     console.log(`✅ Added object: ${object.name}`);
   }
