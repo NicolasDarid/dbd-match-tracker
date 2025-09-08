@@ -1,7 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
-
 const maps = [
   "Fractured Cowshed",
   "Rancid Abattoir",
@@ -39,7 +37,7 @@ const maps = [
   "Nostromo Wreckage",
 ];
 
-async function main() {
+export async function seedMaps(prisma: PrismaClient) {
   for (const name of maps) {
     await prisma.map.upsert({
       where: { name },
@@ -49,14 +47,3 @@ async function main() {
     console.log(`✅ Added: ${name}`);
   }
 }
-
-main()
-  .then(() => {
-    console.log("🎉 All maps inserted.");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error inserting map:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });

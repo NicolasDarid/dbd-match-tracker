@@ -1,7 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
-
 // Mapping des add-ons par killer
 const killerAddOns = {
   "The Clown": [
@@ -880,7 +878,7 @@ const killerAddOns = {
   ],
 };
 
-async function main() {
+export async function seedKillerAddons(prisma: PrismaClient) {
   console.log("🌱 Starting to seed killer add-ons...");
 
   for (const [killerName, addOns] of Object.entries(killerAddOns)) {
@@ -925,14 +923,3 @@ async function main() {
   }
   console.log("🎉 All killer add-ons seeded successfully!");
 }
-
-main()
-  .then(() => {
-    console.log("✨ Seeding completed");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error during seeding:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });

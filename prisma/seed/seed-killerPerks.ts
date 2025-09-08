@@ -1,7 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
-
 const killerPerks = [
   "A Nurse's Calling",
   "Agitation",
@@ -136,7 +134,7 @@ const killerPerks = [
   "Zanshin Tactics",
 ].sort();
 
-async function main() {
+export async function seedKillerPerks(prisma: PrismaClient) {
   for (const name of killerPerks) {
     await prisma.killerPerk.upsert({
       where: { name },
@@ -146,14 +144,3 @@ async function main() {
     console.log(`✅ Added: ${name}`);
   }
 }
-
-main()
-  .then(() => {
-    console.log("🎉 All perks inserted.");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error inserting perk:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });

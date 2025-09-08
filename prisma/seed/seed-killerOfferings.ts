@@ -1,7 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
-
 const killerOfferings = [
   { name: "Bloody Party Streamers", image: null },
   { name: "Hollow Shell", image: null },
@@ -70,7 +68,7 @@ const killerOfferings = [
   { name: "White Ward", image: null },
 ];
 
-async function main() {
+export async function seedKillerOfferings(prisma: PrismaClient) {
   for (const offering of killerOfferings) {
     await prisma.killerOffering.upsert({
       where: { name: offering.name },
@@ -80,14 +78,3 @@ async function main() {
     console.log(`✅ Added offering: ${offering.name}`);
   }
 }
-
-main()
-  .then(() => {
-    console.log("🎉 All killer offerings inserted.");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error inserting killer offerings:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });

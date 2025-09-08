@@ -1,7 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
-
 const survivorOfferings = [
   { name: "Bloody Party Streamers", image: null },
   { name: "Hollow Shell", image: null },
@@ -78,7 +76,7 @@ const survivorOfferings = [
   { name: "Shroud of Separation", image: null },
 ];
 
-async function main() {
+export async function seedSurvivorOfferings(prisma: PrismaClient) {
   for (const offering of survivorOfferings) {
     await prisma.survivorOffering.upsert({
       where: { name: offering.name },
@@ -88,14 +86,3 @@ async function main() {
     console.log(`✅ Added offering: ${offering.name}`);
   }
 }
-
-main()
-  .then(() => {
-    console.log("🎉 All survivor offerings inserted.");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error inserting survivor offerings:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });

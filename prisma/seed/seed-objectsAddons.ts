@@ -1,7 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
-
 const survivorObjects = {
   Flashlight: [
     "Battery",
@@ -69,7 +67,7 @@ const survivorObjects = {
   ],
 };
 
-async function main() {
+export async function seedObjectsAddons(prisma: PrismaClient) {
   console.log("🌱 Starting to seed survivor objects add-ons...");
 
   for (const [objectName, addOns] of Object.entries(survivorObjects)) {
@@ -107,13 +105,3 @@ async function main() {
 
   console.log("🎉 All survivor object add-ons seeded successfully!");
 }
-main()
-  .then(() => {
-    console.log("✨ Seeding completed");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error during seeding:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });

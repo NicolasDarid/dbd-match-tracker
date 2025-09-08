@@ -1,7 +1,5 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
-
 const survivorPerks = [
   "Ace in the Hole",
   "Adrenaline",
@@ -163,7 +161,7 @@ const survivorPerks = [
   "Wiretap",
 ].sort();
 
-async function main() {
+export async function seedSurvivorPerks(prisma: PrismaClient) {
   for (const name of survivorPerks) {
     await prisma.survivorPerk.upsert({
       where: { name },
@@ -173,14 +171,3 @@ async function main() {
     console.log(`✅ Added: ${name}`);
   }
 }
-
-main()
-  .then(() => {
-    console.log("🎉 All perks inserted.");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error inserting perk:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });
