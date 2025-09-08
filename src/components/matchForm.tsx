@@ -1,10 +1,13 @@
 "use client";
 import {
-  Killer,
-  KillerPerk,
-  Map,
-  Survivor,
-  SurvivorPerk,
+  killer as Killer,
+  killerPerk as KillerPerk,
+  killerOffering as KillerOffering,
+  map as Map,
+  survivor as Survivor,
+  survivorPerk as SurvivorPerk,
+  survivorOffering as SurvivorOffering,
+  survivorObject as SurvivorObject,
 } from "@/generated/prisma";
 import { Label } from "./ui/label";
 import { useState } from "react";
@@ -18,8 +21,8 @@ export const MatchForm = (props: {
   killerPerks: KillerPerk[];
   survivorPerks: SurvivorPerk[];
   maps: Map[];
-  killerOffering: KillerOffering;
-  survivorOffering: SurvivorOffering;
+  killerOffering: KillerOffering[];
+  survivorOffering: SurvivorOffering[];
   survivorObjects: SurvivorObject[];
 }) => {
   const {
@@ -56,7 +59,6 @@ export const MatchForm = (props: {
       {killerSide ? (
         <KillerFormWithQuery
           killers={killers}
-          survivors={survivors}
           perks={perks}
           maps={maps}
           offering={killerOffering}

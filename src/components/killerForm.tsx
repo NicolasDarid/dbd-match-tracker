@@ -1,5 +1,12 @@
 "use client";
-import { Killer, KillerPerk, Map } from "@/generated/prisma";
+import {
+  killer as Killer,
+  killerPerk as KillerPerk,
+  killerOffering as KillerOffering,
+  map as Map,
+  survivorPerk as SurvivorPerk,
+  survivorOffering as SurvivorOffering,
+} from "@/generated/prisma";
 import {
   Select,
   SelectContent,
@@ -89,7 +96,7 @@ export const KillerFormWithQuery = (props: {
       return res.json();
     },
     enabled: !!killerId, // évite d'appeler si killerId vide
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData,
   });
 
   const onSubmit = async (data: z.infer<typeof killerFormSchema>) => {
@@ -194,7 +201,7 @@ export const KillerFormWithQuery = (props: {
                     <FormControl>
                       <AddOnMultiSelect
                         addOns={addOns || []}
-                        value={addOns.filter((addOn) =>
+                        value={addOns.filter((addOn: { id: string }) =>
                           field.value?.includes(addOn.id)
                         )}
                         onChange={(selected) =>

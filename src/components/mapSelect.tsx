@@ -20,7 +20,7 @@ import { useState } from "react";
 interface Map {
   id: string;
   name: string;
-  image: string;
+  image: string | null;
 }
 
 interface MapSelectProps {

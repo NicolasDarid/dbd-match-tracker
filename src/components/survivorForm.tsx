@@ -1,11 +1,11 @@
 "use client";
 import {
-  Killer,
-  Survivor,
-  SurvivorPerk,
-  Map,
-  SurvivorObject,
-  SurvivorOffering,
+  killer as Killer,
+  survivor as Survivor,
+  survivorPerk as SurvivorPerk,
+  map as Map,
+  survivorObject as SurvivorObject,
+  survivorOffering as SurvivorOffering,
 } from "@/generated/prisma";
 import {
   Select,
@@ -105,7 +105,7 @@ export const SurvivorFormWithQuery = (props: {
       return res.json();
     },
     enabled: !!objectId,
-    keepPreviousData: true,
+    placeholderData: (previousData) => previousData,
   });
 
   const onSubmit = async (data: z.infer<typeof survivorFormSchema>) => {
@@ -316,7 +316,7 @@ export const SurvivorFormWithQuery = (props: {
                     <FormControl>
                       <AddOnMultiSelect
                         addOns={addOns || []}
-                        value={addOns.filter((addOn) =>
+                        value={addOns.filter((addOn: { id: string }) =>
                           field.value?.includes(addOn.id)
                         )}
                         onChange={(selected) =>

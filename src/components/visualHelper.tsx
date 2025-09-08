@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useState } from "react";
-import { extractVisualHints } from "@/lib/extractVisualHelpers";
+import { extractVisualHints, ExtractedZones } from "@/lib/extractVisualHelpers";
 import {
   Select,
   SelectContent,
@@ -33,9 +33,9 @@ export const VisualHelper = ({ variant }: { variant: string }) => {
           <Select
             defaultValue="1"
             onValueChange={(value) => {
-              setSurvivorNumber(value);
+              setSurvivorNumber(parseInt(value));
             }}
-            value={survivorNumber}
+            value={survivorNumber.toString()}
           >
             <SelectTrigger>
               <SelectValue placeholder="Which survivor were you ?" />
@@ -55,13 +55,15 @@ export const VisualHelper = ({ variant }: { variant: string }) => {
             type="file"
             accept="image/*"
             onChange={(e) => {
-              handleVisualHelpers(e.target.files[0]);
+              if (e.target.files && e.target.files[0]) {
+                handleVisualHelpers(e.target.files[0]);
+              }
             }}
           />
         </div>
 
         {helpers ? (
-          helpers.survivor?.length > 0 ? (
+          helpers.survivor && helpers.survivor.length > 0 ? (
             <div className="grid grid-row-5 gap-2">
               <div>
                 <Image
@@ -77,7 +79,7 @@ export const VisualHelper = ({ variant }: { variant: string }) => {
             <div className="grid grid-row-5 gap-2">
               <div>
                 <Image
-                  src={helpers.killer}
+                  src={helpers.killer || ""}
                   alt="visualHelper"
                   width={850}
                   height={160}
@@ -104,7 +106,9 @@ export const VisualHelper = ({ variant }: { variant: string }) => {
             type="file"
             accept="image/*"
             onChange={(e) => {
-              handleVisualHelpers(e.target.files[0]);
+              if (e.target.files && e.target.files[0]) {
+                handleVisualHelpers(e.target.files[0]);
+              }
             }}
           />
         </div>
@@ -113,7 +117,7 @@ export const VisualHelper = ({ variant }: { variant: string }) => {
           <div className="grid grid-row-5 gap-2">
             <div>
               <Image
-                src={helpers.killer}
+                src={helpers.killer || ""}
                 alt="visualHelper"
                 width={850}
                 height={160}

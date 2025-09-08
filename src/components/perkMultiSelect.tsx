@@ -21,7 +21,7 @@ import Image from "next/image";
 interface Perk {
   id: string;
   name: string;
-  image: string;
+  image: string | null;
 }
 
 interface PerkMultiSelectProps {

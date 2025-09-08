@@ -36,9 +36,9 @@ export default async function Stats() {
           <h2 className="text-2xl font-bold text-white mb-4 ml-4">Killers</h2>
           {mostPlayedKillers.map((killer) => (
             <KillerStatsCard
-              killerId={killer.id}
-              killerName={killer.name}
-              killerImage={killer.image}
+              killerId={killer.id || ""}
+              killerName={killer.name || ""}
+              killerImage={killer.image || null}
               key={killer.id}
             />
           ))}
@@ -48,9 +48,9 @@ export default async function Stats() {
           <h2 className="text-2xl font-bold text-white mb-4 ml-4">Survivors</h2>
           {mostPlayedSurvivors.map((survivor) => (
             <SurvivorStatsCard
-              survivorId={survivor.id}
-              survivorName={survivor.name}
-              survivorImage={survivor.image}
+              survivorId={survivor.id || ""}
+              survivorName={survivor.name || ""}
+              survivorImage={survivor.image || null}
               key={survivor.id}
             />
           ))}
@@ -137,7 +137,7 @@ const KillerStatsCard = async ({
 }: {
   killerId: string;
   killerName: string;
-  killerImage: string;
+  killerImage: string | null;
 }) => {
   const killerStats = await getKillerStats(killerId);
   const avg = killerStats._avg;
@@ -195,8 +195,8 @@ const KillerStatsCard = async ({
               >
                 <p className="text-md text-white text-center mb-3">
                   {combo.matchCount} match(es) –{" "}
-                  <strong>{combo.avgKills.toFixed(1)}</strong> kills –{" "}
-                  <strong>{combo.avgHooks.toFixed(1)}</strong> hooks
+                  <strong>{(combo.avgKills || 0).toFixed(1)}</strong> kills –{" "}
+                  <strong>{(combo.avgHooks || 0).toFixed(1)}</strong> hooks
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 justify-items-center">
                   {combo.perks.map((perk) => (
@@ -231,7 +231,7 @@ const SurvivorStatsCard = async ({
 }: {
   survivorId: string;
   survivorName: string;
-  survivorImage: string;
+  survivorImage: string | null;
 }) => {
   const survivorStats = await getSurvivorStats(survivorId);
   const avg = survivorStats._avg;
@@ -289,8 +289,9 @@ const SurvivorStatsCard = async ({
               >
                 <p className="text-md text-white text-center mb-3">
                   {combo.matchCount} match(es) –{" "}
-                  <strong>{combo.avgRescues.toFixed(1)}</strong> rescues –{" "}
-                  <strong>{combo.avgGenerators.toFixed(1)}</strong> generators
+                  <strong>{(combo.avgRescues || 0).toFixed(1)}</strong> rescues
+                  – <strong>{(combo.avgGenerators || 0).toFixed(1)}</strong>{" "}
+                  generators
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 justify-items-center">
                   {combo.perks.map((perk) => (

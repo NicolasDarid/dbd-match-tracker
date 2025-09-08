@@ -1,6 +1,6 @@
 "use client";
 
-import { SurvivorMatch } from "@/generated/prisma";
+import { SurvivorMatchWithRelations } from "@/types/match";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import clsx from "clsx";
@@ -10,7 +10,9 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export const SurvivorMatchCard = (props: { match: SurvivorMatch }) => {
+export const SurvivorMatchCard = (props: {
+  match: SurvivorMatchWithRelations;
+}) => {
   const { match } = props;
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();

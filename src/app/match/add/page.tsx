@@ -16,6 +16,9 @@ export default async function AddMatch() {
   const killerPerks = await prisma.killerPerk.findMany();
   const survivorPerks = await prisma.survivorPerk.findMany();
   const maps = await prisma.map.findMany();
+  const killerOffering = await prisma.killerOffering.findMany();
+  const survivorOffering = await prisma.survivorOffering.findMany();
+  const survivorObjects = await prisma.survivorObject.findMany();
 
   return (
     <Card className="max-w-4xl mx-auto">
@@ -38,6 +41,9 @@ export default async function AddMatch() {
           killerPerks={killerPerks}
           survivorPerks={survivorPerks}
           maps={maps}
+          killerOffering={killerOffering}
+          survivorOffering={survivorOffering}
+          survivorObjects={survivorObjects}
         />
       </CardContent>
     </Card>

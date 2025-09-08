@@ -1,5 +1,9 @@
 "use client";
-import { KillerMatch, MatchHistory, SurvivorMatch } from "@/generated/prisma";
+import {
+  KillerMatchWithRelations,
+  SurvivorMatchWithRelations,
+  MatchHistoryWithRelations,
+} from "@/types/match";
 import { KillerMatchCard } from "./killerMatchCard";
 import { SurvivorMatchCard } from "./survivorMatchCard";
 import { useState, useEffect } from "react";
@@ -12,7 +16,7 @@ import { useDebounceValue } from "@/lib/utils-client";
 export const MatchHistoryClient = ({
   matchHistory,
 }: {
-  matchHistory: MatchHistory;
+  matchHistory: MatchHistoryWithRelations;
 }) => {
   const [side, setSide] = useState(true); //true for killer and false for survivor I KNOW IT'S BAD
 
@@ -53,9 +57,15 @@ export const MatchHistoryClient = ({
   );
 };
 
-const KillerMatchHistory = ({ matches }: { matches: KillerMatch[] }) => {
+const KillerMatchHistory = ({
+  matches,
+}: {
+  matches: KillerMatchWithRelations[];
+}) => {
   const [query, setQuery] = useState("");
-  const [filteredMatches, setFilteredMatches] = useState<KillerMatch[]>([]);
+  const [filteredMatches, setFilteredMatches] = useState<
+    KillerMatchWithRelations[]
+  >([]);
   const debounceQuery = useDebounceValue(query, 500);
 
   useEffect(() => {
@@ -127,9 +137,15 @@ const KillerMatchHistory = ({ matches }: { matches: KillerMatch[] }) => {
   );
 };
 
-const SurvivorMatchHistory = ({ matches }: { matches: SurvivorMatch[] }) => {
+const SurvivorMatchHistory = ({
+  matches,
+}: {
+  matches: SurvivorMatchWithRelations[];
+}) => {
   const [query, setQuery] = useState("");
-  const [filteredMatches, setFilteredMatches] = useState<SurvivorMatch[]>([]);
+  const [filteredMatches, setFilteredMatches] = useState<
+    SurvivorMatchWithRelations[]
+  >([]);
   const debounceQuery = useDebounceValue(query, 500);
 
   useEffect(() => {

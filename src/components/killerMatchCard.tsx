@@ -1,6 +1,6 @@
 "use client";
 
-import { KillerMatch } from "@/generated/prisma";
+import { KillerMatchWithRelations } from "@/types/match";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import clsx from "clsx";
@@ -10,7 +10,11 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export const KillerMatchCard = ({ match }: { match: KillerMatch }) => {
+export const KillerMatchCard = ({
+  match,
+}: {
+  match: KillerMatchWithRelations;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 

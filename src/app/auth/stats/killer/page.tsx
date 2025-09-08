@@ -17,9 +17,9 @@ export default async function Stats() {
         <div className="mb-8">
           {mostPlayedKillers.map((killer) => (
             <KillerStatsCard
-              killerId={killer.id}
-              killerName={killer.name}
-              killerImage={killer.image}
+              killerId={killer.id || ""}
+              killerName={killer.name || ""}
+              killerImage={killer.image || null}
               key={killer.id}
             />
           ))}
@@ -36,7 +36,7 @@ const KillerStatsCard = async ({
 }: {
   killerId: string;
   killerName: string;
-  killerImage: string;
+  killerImage: string | null;
 }) => {
   const killerStats = await getKillerStats(killerId);
   const avg = killerStats._avg;
@@ -94,8 +94,8 @@ const KillerStatsCard = async ({
               >
                 <p className="text-md text-white text-center mb-3">
                   {combo.matchCount} match(es) –{" "}
-                  <strong>{combo.avgKills.toFixed(1)}</strong> kills –{" "}
-                  <strong>{combo.avgHooks.toFixed(1)}</strong> hooks
+                  <strong>{(combo.avgKills || 0).toFixed(1)}</strong> kills –{" "}
+                  <strong>{(combo.avgHooks || 0).toFixed(1)}</strong> hooks
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 justify-items-center">
                   {combo.perks.map((perk) => (

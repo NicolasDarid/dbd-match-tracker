@@ -22,14 +22,14 @@ export async function POST(request: NextRequest) {
   const perkComboKey =
     perkIds.length === 4 ? perkIds.slice().sort().join("_") : null;
 
-  const matchHistory = await prisma.matchHistory.findUnique({
+  let matchHistory = await prisma.matchHistory.findUnique({
     where: {
       userId: user?.id,
     },
   });
 
   if (!matchHistory) {
-    await prisma.matchHistory.create({
+    matchHistory = await prisma.matchHistory.create({
       data: {
         user: {
           connect: {
@@ -56,17 +56,17 @@ export async function POST(request: NextRequest) {
 
         perkComboKey: perkComboKey ?? "none",
         perks: {
-          connect: match.perks.map((id) => ({
+          connect: match.perks.map((id: string) => ({
             id,
           })),
         },
         addOns: {
-          connect: match.addOns.map((id) => ({
+          connect: match.addOns.map((id: string) => ({
             id,
           })),
         },
         offerings: {
-          connect: match.offering.map((id) => ({
+          connect: match.offering.map((id: string) => ({
             id,
           })),
         },
@@ -117,12 +117,12 @@ export async function POST(request: NextRequest) {
       },
 
       perks: {
-        connect: match.perks.map((id) => ({
+        connect: match.perks.map((id: string) => ({
           id,
         })),
       },
       offerings: {
-        connect: match.offerings.map((id) => ({
+        connect: match.offerings.map((id: string) => ({
           id,
         })),
       },
@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
     // Ajouter addOns seulement s'ils sont fournis
     if (match.addOns && match.addOns.length > 0) {
       survivorMatchData.addOns = {
-        connect: match.addOns.map((id) => ({
+        connect: match.addOns.map((id: string) => ({
           id,
         })),
       };

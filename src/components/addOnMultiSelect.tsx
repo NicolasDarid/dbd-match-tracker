@@ -21,7 +21,7 @@ import { Check, ChevronsUpDown } from "lucide-react";
 interface AddOn {
   id: string;
   name: string;
-  image: string;
+  image: string | null;
 }
 
 interface AddOnMultiSelectProps {
