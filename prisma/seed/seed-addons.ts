@@ -915,7 +915,6 @@ async function main() {
 
     console.log(`✅ Completed add-ons for ${killerName}`);
   }
-
   console.log("🎉 All killer add-ons seeded successfully!");
 }
 

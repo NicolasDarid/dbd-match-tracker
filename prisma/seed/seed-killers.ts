@@ -1,5 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
-const prisma = new PrismaClient();
+import { PrismaClient } from "@prisma/client";
 
 const killers = [
   "The Hillbilly",
@@ -41,25 +40,23 @@ const killers = [
   "The Animatronic",
 ];
 
-async function main() {
-  for (const name of killers) {
-    await prisma.killer.create({
-      data: {
-        name,
-        image: null, // ou une URL si tu veux les remplir plus tard
-      },
-    });
-    console.log(`✅ Added: ${name}`);
-  }
-}
+export async function seedKillers(prisma: PrismaClient) {
+  console.log("🎯 Ajout des killers...");
 
-main()
-  .then(() => {
-    console.log("🎉 All killers inserted.");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error inserting killers:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });
+  for (const name of killers) {
+    try {
+      await prisma.killer.upsert({
+        where: { name },
+        update: {},
+        create: {
+          name,
+          image: null,
+        },
+      });
+    } catch (error) {
+      console.log(`⚠️  Killer ${name} déjà existant ou erreur:`, error);
+    }
+  }
+
+  console.log(`✅ ${killers.length} killers traités`);
+}

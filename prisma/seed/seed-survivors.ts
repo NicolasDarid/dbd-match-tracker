@@ -1,6 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
-
-const prisma = new PrismaClient();
+import { PrismaClient } from "@prisma/client";
 
 const survivors = [
   "Dwight Fairfield",
@@ -42,25 +40,23 @@ const survivors = [
   "Sable Ward",
 ];
 
-async function main() {
-  for (const name of survivors) {
-    await prisma.survivor.create({
-      data: {
-        name,
-        image: null, // ou une URL si tu veux les remplir plus tard
-      },
-    });
-    console.log(`✅ Added: ${name}`);
-  }
-}
+export async function seedSurvivors(prisma: PrismaClient) {
+  console.log("🏃 Ajout des survivors...");
 
-main()
-  .then(() => {
-    console.log("🎉 All survivors inserted.");
-    prisma.$disconnect();
-  })
-  .catch((e) => {
-    console.error("❌ Error inserting survivor:", e);
-    prisma.$disconnect();
-    process.exit(1);
-  });
+  for (const name of survivors) {
+    try {
+      await prisma.survivor.upsert({
+        where: { name },
+        update: {},
+        create: {
+          name,
+          image: null,
+        },
+      });
+    } catch (error) {
+      console.log(`⚠️  Survivor ${name} déjà existant ou erreur:`, error);
+    }
+  }
+
+  console.log(`✅ ${survivors.length} survivors traités`);
+}

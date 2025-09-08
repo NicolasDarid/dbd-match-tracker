@@ -3,28 +3,28 @@ import { PrismaClient } from "@/generated/prisma";
 const prisma = new PrismaClient();
 
 const survivorObjects = {
-  // Flashlight: [
-  //   "Battery",
-  //   "Leather Grip",
-  //   "Power Bulb",
-  //   "Wide Lens",
-  //   "Focus Lens",
-  //   "Heavy Duty Battery",
-  //   "Low Amp Filament",
-  //   "Rubber Grip",
-  //   "TIR Optic",
-  //   "Intense Halogen",
-  //   "Long Life Battery",
-  //   "High-End Sapphire Lens",
-  //   "Odd Bulb",
-  // ],
-  // "Fog Vial": [
-  //   "Volcanic Stone",
-  //   "Reactive Compound",
-  //   "Oily Sap",
-  //   "Mushroom Formula",
-  //   "Potent Extract",
-  // ],
+  Flashlight: [
+    "Battery",
+    "Leather Grip",
+    "Power Bulb",
+    "Wide Lens",
+    "Focus Lens",
+    "Heavy Duty Battery",
+    "Low Amp Filament",
+    "Rubber Grip",
+    "TIR Optic",
+    "Intense Halogen",
+    "Long Life Battery",
+    "High-End Sapphire Lens",
+    "Odd Bulb",
+  ],
+  "Fog Vial": [
+    "Volcanic Stone",
+    "Reactive Compound",
+    "Oily Sap",
+    "Mushroom Formula",
+    "Potent Extract",
+  ],
   Keys: [
     "Friendship Charm",
     "Shrill Whistle",
@@ -107,7 +107,6 @@ async function main() {
 
   console.log("🎉 All survivor object add-ons seeded successfully!");
 }
-
 main()
   .then(() => {
     console.log("✨ Seeding completed");

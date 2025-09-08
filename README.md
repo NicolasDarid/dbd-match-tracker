@@ -28,36 +28,86 @@ DBD Match Tracker est une application web moderne qui permet aux joueurs de **De
 
 ## 🚀 **Démarrage rapide**
 
-### **Prérequis**
-
-- Node.js 18+
-- pnpm (recommandé)
-- Base de données PostgreSQL
-- Compte Firebase
-
-### **Installation**
+### **Installation en Une Commande** ⚡
 
 ```bash
 # 1. Cloner le repository
 git clone https://github.com/NicolasDarid/dbd-match-tracker.git
 cd dbd-match-tracker
 
-# 2. Installer les dépendances
+# 2. Configuration automatique complète
+pnpm run setup
+```
+
+Le script de setup va automatiquement :
+
+- ✅ Vérifier les prérequis
+- ✅ Installer les dépendances
+- ✅ Configurer Prisma
+- ✅ Appliquer les migrations
+- ✅ Peupler la base de données
+
+### **Prérequis**
+
+- Node.js 18+
+- Base de données PostgreSQL (Neon, Supabase, ou Vercel Postgres)
+
+### **Configuration Manuelle** (si nécessaire)
+
+```bash
+# 1. Installer les dépendances
 pnpm install
 
-# 3. Configurer les variables d'environnement
-cp .env.example .env.local
-# Éditer .env.local avec vos valeurs
+# 2. Configurer les variables d'environnement
+cp env.example .env
+# Éditer .env avec votre DATABASE_URL
 
-# 4. Configurer la base de données
-npx prisma migrate deploy
-npx prisma db seed
+# 3. Configurer la base de données
+pnpm run db:migrate:deploy
+pnpm run db:seed
 
 # 5. Lancer en développement
 pnpm dev
 ```
 
 Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
+
+## 🛠️ **Scripts Disponibles**
+
+### **Setup et Configuration**
+
+```bash
+pnpm run setup              # Setup automatique complet
+pnpm run db:generate        # Générer le client Prisma
+pnpm run db:push            # Push du schéma vers la DB
+```
+
+### **Migrations**
+
+```bash
+pnpm run db:migrate         # Migration en développement
+pnpm run db:migrate:deploy  # Migration en production
+pnpm run db:migrate:reset   # Reset complet des migrations
+pnpm run db:status          # Statut des migrations
+```
+
+### **Base de Données**
+
+```bash
+pnpm run db:seed            # Peupler la base de données
+pnpm run db:studio          # Interface graphique Prisma
+pnpm run db:format          # Formatage du schéma
+pnpm run db:validate        # Validation du schéma
+```
+
+### **Développement**
+
+```bash
+pnpm dev                    # Serveur de développement
+pnpm build                  # Build de production
+pnpm start                  # Serveur de production
+pnpm lint                   # Linter ESLint
+```
 
 ## ⚙️ **Configuration**
 
