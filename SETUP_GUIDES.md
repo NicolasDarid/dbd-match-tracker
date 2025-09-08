@@ -21,6 +21,7 @@
 ### **📖 Documentation**
 
 - **[README.md](./README.md)** - Documentation principale du projet
+- **[LEGAL_DISCLAIMER.md](./LEGAL_DISCLAIMER.md)** - Disclaimer légal et protection des droits d'auteur
 
 ## 🎯 **Ordre de lecture recommandé**
 

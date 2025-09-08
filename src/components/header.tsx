@@ -35,6 +35,9 @@ export default async function Header() {
         <Link href="/auth/stats/survivor" className="cursor-pointer">
           <Button className="cursor-pointer">Survivor Stats</Button>
         </Link>
+        <Link href="/legal" className="cursor-pointer">
+          <Button className="cursor-pointer">Legal</Button>
+        </Link>
       </div>
 
       <h1 className="max-sm:hidden min-lg:absolute min-lg:left-1/2 min-lg:top-1/2 min-lg:-translate-x-1/2 min-lg:-translate-y-1/2 font-roboto text-4xl font-bold text-white text-shadow-red-900 text-shadow-lg">

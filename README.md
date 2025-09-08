@@ -188,6 +188,13 @@ L'application implémente plusieurs mesures de sécurité :
 
 **Guide détaillé** : Voir [scripts/security-check.js](./scripts/security-check.js)
 
+## ⚖️ **Aspects légaux**
+
+- 📄 **Page de disclaimer légal** : `/legal` - Protection des droits d'auteur
+- 🎮 **Non-affiliation** : Application fan-made, non affiliée à Behavior Interactive
+- 📚 **Fair Use** : Utilisation éducative et non-commerciale du contenu DBD
+- 🔒 **Respect des droits** : Tous les droits de Dead by Daylight appartiennent à Behavior Interactive Inc.
+
 ## 📊 **Fonctionnalités détaillées**
 
 ### **Gestion des matchs**
