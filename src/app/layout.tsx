@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto_Condensed } from "next/font/google";
 import { Toaster } from "sonner";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +13,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const robotoCondensed = Roboto_Condensed({
+  variable: "--font-roboto-condensed",
   subsets: ["latin"],
 });
 
@@ -27,13 +34,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900`}
+        className={`${geistSans.variable} ${geistMono.variable} ${robotoCondensed.variable} antialiased bg-black`}
       >
-        <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full p-4 ">
-          <Header />
-          <main className="px-4">{children}</main>
-          <Toaster />
-        </div>
+        <Providers>
+          <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full p-4 ">
+            <Header />
+            <main className="px-4 flex-1">{children}</main>
+            <Footer />
+            <Toaster />
+          </div>
+        </Providers>
       </body>
     </html>
   );

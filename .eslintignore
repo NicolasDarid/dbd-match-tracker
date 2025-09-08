@@ -1,0 +1,16 @@
+# Fichiers générés par Prisma
+src/generated/
+**/generated/
+**/runtime/
+**/wasm*.js
+**/wasm*.mjs
+
+# Fichiers de build
+.next/
+node_modules/
+dist/
+build/
+
+# Fichiers de configuration
+*.config.js
+*.config.mjs
