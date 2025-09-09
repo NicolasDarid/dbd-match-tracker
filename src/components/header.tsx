@@ -30,10 +30,10 @@ export default async function Header() {
         <Link href="/" className="cursor-pointer">
           <Button className="cursor-pointer">History</Button>
         </Link>
-        <Link href="/auth/stats/killer" className="cursor-pointer">
+        <Link href="/stats/killer" className="cursor-pointer">
           <Button className="cursor-pointer">Killer Stats</Button>
         </Link>
-        <Link href="/auth/stats/survivor" className="cursor-pointer">
+        <Link href="/stats/survivor" className="cursor-pointer">
           <Button className="cursor-pointer">Survivor Stats</Button>
         </Link>
         <Link href="/legal" className="cursor-pointer">

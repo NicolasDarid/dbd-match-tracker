@@ -54,7 +54,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Protection des routes protégées
-  if (pathname.startsWith("/match/") || pathname.startsWith("/auth/stats")) {
+  if (pathname.startsWith("/match/") || pathname.startsWith("/stats/")) {
     try {
       const session = await auth.api.getSession({
         headers: request.headers,

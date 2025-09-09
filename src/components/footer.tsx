@@ -40,7 +40,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/auth/stats/killer"
+                  href="/stats/killer"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Killer Stats
@@ -48,7 +48,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/auth/stats/survivor"
+                  href="/stats/survivor"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Survivor Stats
