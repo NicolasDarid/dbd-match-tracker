@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
-import { useState, FormEventHandler } from "react";
+import { useState, FormEventHandler, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,21 @@ export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  // Rediriger si l'utilisateur est déjà connecté
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const session = await authClient.getSession();
+        if (session?.user) {
+          router.push("/");
+        }
+      } catch (error) {
+        // Ignorer les erreurs, l'utilisateur n'est pas connecté
+      }
+    };
+    checkAuth();
+  }, [router]);
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -23,11 +38,13 @@ export default function SignUp() {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     authClient.signUp.email(
-      { email, name, password, callbackURL: "/auth/signin" },
+      { email, name, password, callbackURL: "/" },
       {
         onRequest: () => setIsLoading(true),
         onSuccess: () => {
           setIsLoading(false);
+          // L'utilisateur est automatiquement connecté après l'inscription
+          // On le redirige vers la page d'accueil
           router.push("/");
           router.refresh();
         },

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
-import { useState, FormEventHandler } from "react";
+import { useState, FormEventHandler, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,21 @@ import { Loader } from "lucide-react";
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  // Rediriger si l'utilisateur est déjà connecté
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const session = await authClient.getSession();
+        if (session?.user) {
+          router.push("/");
+        }
+      } catch (error) {
+        // Ignorer les erreurs, l'utilisateur n'est pas connecté
+      }
+    };
+    checkAuth();
+  }, [router]);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();

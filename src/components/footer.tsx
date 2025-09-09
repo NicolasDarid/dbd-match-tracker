@@ -1,6 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import CookieSettings from "@/components/cookieSettings";
 
 export default function Footer() {
+  const [isCookieDialogOpen, setIsCookieDialogOpen] = useState(false);
+
   return (
     <footer className="border-t border-red-950 bg-black">
       <div className="container mx-auto px-4 py-8">
@@ -53,6 +61,23 @@ export default function Footer() {
                 >
                   Legal Disclaimer
                 </Link>
+              </li>
+              <li>
+                <Dialog
+                  open={isCookieDialogOpen}
+                  onOpenChange={setIsCookieDialogOpen}
+                >
+                  <DialogTrigger asChild>
+                    <button className="text-gray-300 hover:text-white transition-colors text-left">
+                      Cookie settings
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl">
+                    <CookieSettings
+                      onClose={() => setIsCookieDialogOpen(false)}
+                    />
+                  </DialogContent>
+                </Dialog>
               </li>
             </ul>
           </div>

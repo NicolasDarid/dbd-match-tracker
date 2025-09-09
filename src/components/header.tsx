@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { LogoutButton } from "./logout";
+import CookieIndicator from "./cookieIndicator";
 import Image from "next/image";
 import logo from "../../public/logo.png";
 
@@ -44,7 +45,8 @@ export default async function Header() {
         DBD Match Tracker
       </h1>
 
-      <>
+      <div className="flex items-center gap-2">
+        <CookieIndicator />
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -52,22 +54,16 @@ export default async function Header() {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem asChild>
-                <Link href={"/auth"}>My account</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
                 <LogoutButton className="w-full" />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Link
-            href="/auth/signin"
-            className="text-primary bg-gray-100 hover:bg-gray-300 rounded-md px-2 py-1"
-          >
-            Sign In
+          <Link href="/auth/signin">
+            <Button className="cursor-pointer">Sign in</Button>
           </Link>
         )}
-      </>
+      </div>
     </header>
   );
 }

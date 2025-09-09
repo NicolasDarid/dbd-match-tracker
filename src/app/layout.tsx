@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Roboto_Condensed } from "next/font/google";
 import { Toaster } from "sonner";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import CookieBanner from "@/components/cookieBanner";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -41,6 +42,7 @@ export default function RootLayout({
             <Header />
             <main className="px-4 flex-1">{children}</main>
             <Footer />
+            <CookieBanner />
             <Toaster />
           </div>
         </Providers>

@@ -1,16 +1,18 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Legal Disclaimer - DBD Match Tracker",
+  title: "Legal Disclaimer & Privacy Policy - DBD Match Tracker",
   description:
-    "Legal disclaimer and copyright information for DBD Match Tracker",
+    "Legal disclaimer, privacy policy, and cookie usage information for DBD Match Tracker",
 };
 
 export default function LegalPage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="prose prose-gray dark:prose-invert max-w-none">
-        <h1 className="text-3xl font-bold mb-6 text-white">Legal Disclaimer</h1>
+        <h1 className="text-3xl font-bold mb-6 text-white">
+          Legal Disclaimer & Privacy Policy
+        </h1>
 
         <div className="bg-red-950/20 border border-red-950 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold text-red-300 mb-4">
@@ -19,7 +21,9 @@ export default function LegalPage() {
           <p className="text-gray-300">
             This application is not affiliated with, endorsed by, or sponsored
             by Behavior Interactive Inc. Dead by Daylight is a trademark of
-            Behavior Interactive Inc.
+            Behavior Interactive Inc. All rights reserved. The application is
+            created for educational purposes only. We do not claim ownership of
+            any Dead by Daylight intellectual property.
           </p>
         </div>
 
@@ -77,6 +81,105 @@ export default function LegalPage() {
             <li>Not recognized or supported by Behavior Interactive Inc.</li>
             <li>Created by independent developers for the community</li>
           </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4 text-white">
+            Cookie Usage and Privacy
+          </h2>
+          <p className="mb-4 text-gray-300">
+            This application uses cookies to provide essential functionality and
+            improve user experience. We are committed to transparency about our
+            cookie usage and respect your privacy choices.
+          </p>
+
+          <h3 className="text-xl font-semibold mb-3 text-white">
+            Types of Cookies Used
+          </h3>
+
+          <div className="mb-4">
+            <h4 className="text-lg font-medium mb-2 text-white">
+              Essential Cookies
+            </h4>
+            <p className="mb-2 text-gray-300">
+              These cookies are necessary for the application to function
+              properly and cannot be disabled:
+            </p>
+            <ul className="list-disc pl-6 mb-4 text-gray-300">
+              <li>
+                <strong>Authentication cookies:</strong> Store your login
+                session and user preferences
+              </li>
+              <li>
+                <strong>Security cookies:</strong> Protect against unauthorized
+                access and maintain session integrity
+              </li>
+              <li>
+                <strong>Functional cookies:</strong> Remember your application
+                settings and preferences
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-4">
+            <h4 className="text-lg font-medium mb-2 text-white">
+              Analytics Cookies (Optional)
+            </h4>
+            <p className="mb-2 text-gray-300">
+              These cookies help us understand how users interact with our
+              application:
+            </p>
+            <ul className="list-disc pl-6 mb-4 text-gray-300">
+              <li>
+                <strong>Usage statistics:</strong> Track which features are most
+                used to improve the application
+              </li>
+              <li>
+                <strong>Performance monitoring:</strong> Identify and fix
+                technical issues
+              </li>
+              <li>
+                <strong>User behavior analysis:</strong> Understand user
+                patterns to enhance functionality
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-4">
+            <h4 className="text-lg font-medium mb-2 text-white">
+              Cookie Management
+            </h4>
+            <p className="mb-2 text-gray-300">
+              You can manage your cookie preferences at any time:
+            </p>
+            <ul className="list-disc pl-6 mb-4 text-gray-300">
+              <li>Use the cookie banner that appears on your first visit</li>
+              <li>Access cookie settings through the footer link</li>
+              <li>Use the cookie icon in the header when logged in</li>
+              <li>
+                Clear your browser&apos;s local storage to reset preferences
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-blue-950/20 border border-blue-950 rounded-lg p-4 mb-4">
+            <h4 className="text-lg font-medium mb-2 text-blue-300">
+              Your Rights
+            </h4>
+            <p className="text-gray-300">You have the right to:</p>
+            <ul className="list-disc pl-6 mt-2 text-gray-300">
+              <li>Accept or decline non-essential cookies</li>
+              <li>Change your cookie preferences at any time</li>
+              <li>Request information about the cookies we use</li>
+              <li>Withdraw your consent for analytics cookies</li>
+            </ul>
+          </div>
+
+          <p className="text-gray-300">
+            <strong className="text-white">Note:</strong> Disabling essential
+            cookies will prevent you from using the application&apos;s core
+            features, including authentication and data storage.
+          </p>
         </section>
 
         <section className="mb-8">
