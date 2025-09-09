@@ -1,4 +1,6 @@
-import { getUser } from "@/lib/auth-session";
+"use client";
+
+import { authClient } from "@/lib/auth-client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +13,29 @@ import { LogoutButton } from "./logout";
 import CookieIndicator from "./cookieIndicator";
 import Image from "next/image";
 import logo from "../../public/logo.png";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
-export default async function Header() {
-  const user = await getUser();
+export default function Header() {
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const session = await authClient.getSession();
+        setUser(session?.data?.user || null);
+      } catch (error) {
+        setUser(null);
+        toast.error("Error checking authentication", {
+          description: error instanceof Error ? error.message : "Unknown error",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
     <header className="relative flex items-center gap-4 px-4 py-2 border-b border-red-950 justify-between text-xl">
@@ -47,7 +69,9 @@ export default async function Header() {
 
       <div className="flex items-center gap-2">
         <CookieIndicator />
-        {user ? (
+        {loading ? (
+          <Button disabled>Loading...</Button>
+        ) : user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">{user.name || user.email}</Button>
