@@ -43,7 +43,15 @@ export const MatchHistory = async () => {
 
   if (!matchHistory) {
     return (
-      <div>No match history found start by adding a match to your history</div>
+      <div className="flex justify-center items-center w-full">
+        <div className="bg-white/10 border border-white/10 shadow-lg rounded-xl p-8 w-full max-w-xl text-center">
+          <span className="text-lg text-gray-100 font-semibold">
+            Aucun historique de parties trouvé.
+            <br />
+            Commencez par ajouter une partie à votre historique !
+          </span>
+        </div>
+      </div>
     );
   }
 
