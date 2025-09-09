@@ -21,7 +21,7 @@ export default function Login() {
     const checkAuth = async () => {
       try {
         const session = await authClient.getSession();
-        if (session?.user) {
+        if (session?.data?.user) {
           router.push("/");
         }
       } catch (error) {
