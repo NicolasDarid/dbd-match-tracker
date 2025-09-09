@@ -153,7 +153,7 @@ export const KillerMatchCard = ({
                 ) : (
                   <div key={addOn.id} className="flex flex-col items-center">
                     <Image
-                      src="/Placeholder_addOns.webp"
+                      src="/Placeholder_addons.webp"
                       alt={addOn.name}
                       width={60}
                       height={60}
@@ -200,7 +200,7 @@ export const KillerMatchCard = ({
         <div className="grid grid-cols-4 gap-4 mt-6 text-center text-lg font-semibold items-center">
           <div className="flex flex-col items-center">
             <Image
-              src="/icon_sacrifices.png"
+              src="/Icon_sacrifices.png"
               alt="sacrifices"
               width={50}
               height={50}
@@ -210,7 +210,7 @@ export const KillerMatchCard = ({
           </div>
           <div className="flex flex-col items-center">
             <Image
-              src="/icon_hooks.png"
+              src="/Icon_hooks.png"
               alt="hook"
               width={50}
               height={50}
@@ -220,7 +220,7 @@ export const KillerMatchCard = ({
           </div>
           <div className="flex flex-col items-center">
             <Image
-              src="/icon_generators.png"
+              src="/Icon_generators.png"
               alt="generator"
               width={50}
               height={50}

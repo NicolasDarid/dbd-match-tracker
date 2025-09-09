@@ -215,7 +215,7 @@ export const SurvivorMatchCard = (props: {
                 ) : (
                   <div key={addOn.id} className="flex flex-col items-center">
                     <Image
-                      src="/Placeholder_addOns.webp"
+                      src="/Placeholder_addons.webp"
                       alt={addOn.name}
                       width={60}
                       height={60}
@@ -262,7 +262,7 @@ export const SurvivorMatchCard = (props: {
         <div className="grid grid-cols-3 gap-4 mt-6 text-center text-lg font-semibold items-center">
           <div className="flex flex-col items-center">
             <Image
-              src="/icon_saves.png"
+              src="/Icon_saves.png"
               alt="rescues"
               width={50}
               height={50}
@@ -272,7 +272,7 @@ export const SurvivorMatchCard = (props: {
           </div>
           <div className="flex flex-col items-center">
             <Image
-              src="/icon_generators.png"
+              src="/Icon_generators.png"
               alt="generator"
               width={50}
               height={50}
