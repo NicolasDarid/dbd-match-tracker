@@ -20,11 +20,11 @@ export const auth = betterAuth({
   email: {
     sendVerificationEmail: async ({
       user,
-      token,
+      // token,
       url,
     }: {
       user: { email: string };
-      token: string;
+      // token: string;
       url: string;
     }) => {
       // Configuration SMTP pour l'envoi d'emails
@@ -44,7 +44,7 @@ export const auth = betterAuth({
   },
   trustedOrigins:
     process.env.NODE_ENV === "production"
-      ? [process.env.BETTER_AUTH_URL || "https://yourdomain.com"]
+      ? [process.env.BETTER_AUTH_URL || "https://dbd-match-tracker.vercel.app"]
       : ["http://localhost:3000", "http://localhost:3001"],
   advanced: {
     generateId: () => crypto.randomUUID(),

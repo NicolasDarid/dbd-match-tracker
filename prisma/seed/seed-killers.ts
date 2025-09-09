@@ -39,6 +39,8 @@ const killers = [
   "The Ghoul",
   "The Animatronic",
   "The Wraith",
+  "The Executioner",
+  "The Trapper",
 ];
 
 export async function seedKillers(prisma: PrismaClient) {
