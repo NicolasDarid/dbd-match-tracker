@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "../../src/generated/prisma";
 
 const killerOfferings = [
   { name: "Bloody Party Streamers", image: null },

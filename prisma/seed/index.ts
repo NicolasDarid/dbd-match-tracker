@@ -3,7 +3,7 @@
  * Ce script orchestre tous les seeds pour peupler la base de données
  */
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../src/generated/prisma";
 
 const prisma = new PrismaClient();
 
@@ -76,37 +76,37 @@ async function main() {
   }
 }
 
-async function cleanDatabase() {
-  // Supprimer les données dans l'ordre inverse des dépendances
-  const tables = [
-    "matchHistory",
-    "killerMatch",
-    "survivorMatch",
-    "map",
-    "killerOffering",
-    "survivorOffering",
-    "survivorAddOn",
-    "survivorObject",
-    "killerAddOn",
-    "survivorPerk",
-    "killerPerk",
-    "survivor",
-    "killer",
-    "verification",
-    "session",
-    "account",
-    "user",
-  ];
+// async function cleanDatabase() {
+//   // Supprimer les données dans l'ordre inverse des dépendances
+//   const tables = [
+//     "matchHistory",
+//     "killerMatch",
+//     "survivorMatch",
+//     "map",
+//     "killerOffering",
+//     "survivorOffering",
+//     "survivorAddOn",
+//     "survivorObject",
+//     "killerAddOn",
+//     "survivorPerk",
+//     "killerPerk",
+//     "survivor",
+//     "killer",
+//     "verification",
+//     "session",
+//     "account",
+//     "user",
+//   ];
 
-  for (const table of tables) {
-    try {
-      await (prisma as any)[table].deleteMany();
-      console.log(`🧹 Table ${table} nettoyée`);
-    } catch (error) {
-      console.log(`⚠️  Impossible de nettoyer la table ${table}:`, error);
-    }
-  }
-}
+//   for (const table of tables) {
+//     try {
+//       await (prisma as any)[table].deleteMany();
+//       console.log(`🧹 Table ${table} nettoyée`);
+//     } catch (error) {
+//       console.log(`⚠️  Impossible de nettoyer la table ${table}:`, error);
+//     }
+//   }
+// }
 
 async function showSummary() {
   console.log("\n📊 Résumé de la base de données:");

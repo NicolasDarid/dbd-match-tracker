@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "../../src/generated/prisma";
 
 const killerPerks = [
   "A Nurse's Calling",
@@ -85,7 +85,7 @@ const killerPerks = [
   "Mindbreaker",
   "Monitor & Abuse",
   "Nemesis",
-  "No QUarter",
+  "No Quarter",
   "No Way Out",
   "None Are Free",
   "Nowhere to Hide",

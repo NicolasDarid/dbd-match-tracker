@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "../../src/generated/prisma";
 
 // Mapping des add-ons par killer
 const killerAddOns = {

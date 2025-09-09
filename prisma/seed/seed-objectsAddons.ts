@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "../../src/generated/prisma";
 
 const survivorObjects = {
   Flashlight: [
@@ -87,8 +87,16 @@ export async function seedObjectsAddons(prisma: PrismaClient) {
 
     for (const addOnName of addOns) {
       try {
-        await prisma.survivorAddOn.create({
-          data: {
+        await prisma.survivorAddOn.upsert({
+          where: {
+            name: addOnName,
+          },
+          update: {
+            name: addOnName,
+            image: null,
+            objectId: object.id,
+          },
+          create: {
             name: addOnName,
             image: null, // Vous pouvez ajouter des URLs d'images plus tard
             objectId: object.id,

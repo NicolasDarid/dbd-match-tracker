@@ -15,32 +15,32 @@ datasource db {
 }
 
 model user {
-  id            String   @id @default(uuid())
+  id            String        @id @default(uuid())
   name          String
-  email         String   @unique
+  email         String        @unique
   emailVerified Boolean
   image         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   accounts      account[]
   sessions      session[]
-  matchHistory   matchHistory?
+  matchHistory  matchHistory?
 }
 
 model session {
-  id         String   @id @default(uuid())
-  userId     String
-  token      String   @unique
-  expiresAt  DateTime
-  ipAddress  String?
-  userAgent  String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  user       user     @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      user     @relation(fields: [userId], references: [id])
 }
 
 model account {
-  id                    String   @id @default(uuid())
+  id                    String    @id @default(uuid())
   userId                String
   accountId             String
   providerId            String
@@ -51,9 +51,9 @@ model account {
   scope                 String?
   idToken               String?
   password              String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  user                  user     @relation(fields: [userId], references: [id])
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  user      @relation(fields: [userId], references: [id])
 }
 
 model verification {
@@ -66,133 +66,133 @@ model verification {
 }
 
 model killer {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  matches   killerMatch[]
-  addOns    killerAddOn[]
+  id              String          @id @default(uuid())
+  name            String          @unique
+  image           String?
+  matches         killerMatch[]
+  addOns          killerAddOn[]
   survivorMatches survivorMatch[] @relation("killerMatches")
-  matchHistory    matchHistory[]  
-}
-
-model survivor {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  matches   survivorMatch[]
   matchHistory    matchHistory[]
 }
 
+model survivor {
+  id           String          @id @default(uuid())
+  name         String          @unique
+  image        String?
+  matches      survivorMatch[]
+  matchHistory matchHistory[]
+}
+
 model killerPerk {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  matches   killerMatch[]
+  id      String        @id @default(uuid())
+  name    String        @unique
+  image   String?
+  matches killerMatch[]
 }
 
 model killerAddOn {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  matches   killerMatch[] 
-  killer    killer?       @relation(fields: [killerId], references: [id])
-  killerId  String?
+  id       String        @id @default(uuid())
+  name     String        @unique
+  image    String?
+  matches  killerMatch[]
+  killer   killer?       @relation(fields: [killerId], references: [id])
+  killerId String?
 }
 
 model killerOffering {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  matches   killerMatch[]
+  id      String        @id @default(uuid())
+  name    String        @unique
+  image   String?
+  matches killerMatch[]
 }
 
 model survivorObject {
-  id        String   @id @default(uuid())
-  name String
-  image String?
+  id      String          @id @default(uuid())
+  name    String          @unique
+  image   String?
   matches survivorMatch[]
-  addOns survivorAddOn[]
+  addOns  survivorAddOn[]
 }
 
 model survivorPerk {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  matches   survivorMatch[]
+  id      String          @id @default(uuid())
+  name    String          @unique
+  image   String?
+  matches survivorMatch[]
 }
 
 model survivorAddOn {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  objectId String
-  survivorObject survivorObject @relation(fields: [objectId], references: [id])
-  matches   survivorMatch[] 
+  id             String          @id @default(uuid())
+  name           String          @unique
+  image          String?
+  objectId       String
+  survivorObject survivorObject  @relation(fields: [objectId], references: [id])
+  matches        survivorMatch[]
 }
 
 model survivorOffering {
-  id        String   @id @default(uuid())
-  name      String
-  image     String?
-  matches   survivorMatch[]
+  id      String          @id @default(uuid())
+  name    String          @unique
+  image   String?
+  matches survivorMatch[]
 }
 
 model map {
-  id        String   @id @default(uuid())
-  name      String
-  estate    String  @default("Estate")
-  image     String?
-  killerMatches   killerMatch[] @relation("maps")
+  id              String          @id @default(uuid())
+  name            String          @unique
+  estate          String          @default("Estate")
+  image           String?
+  killerMatches   killerMatch[]   @relation("maps")
   survivorMatches survivorMatch[] @relation("maps")
 }
 
 model killerMatch {
-  id        String   @id @default(uuid())
-  killerId  String
-  mapId     String
-  killer killer @relation(fields: [killerId], references: [id])
-  playedAt DateTime @default(now())
-  perks killerPerk[]
-  addOns          killerAddOn[]
-  offerings       killerOffering[]
-  map             map      @relation("maps", fields: [mapId], references: [id])
-  numberOfKills Int
-  numberOfHooks Int
+  id                          String           @id @default(uuid())
+  killerId                    String
+  mapId                       String
+  killer                      killer           @relation(fields: [killerId], references: [id])
+  playedAt                    DateTime         @default(now())
+  perks                       killerPerk[]
+  addOns                      killerAddOn[]
+  offerings                   killerOffering[]
+  map                         map              @relation("maps", fields: [mapId], references: [id])
+  numberOfKills               Int
+  numberOfHooks               Int
   numberOfGeneratorsRemaining Int
-  score Int
-  killerWin Boolean
-  matchHistory    matchHistory[] @relation("matchHistoryKiller")
-  perkComboKey    String? @default("none")
+  score                       Int
+  killerWin                   Boolean
+  matchHistory                matchHistory[]   @relation("matchHistoryKiller")
+  perkComboKey                String?          @default("none")
 }
 
 model survivorMatch {
-  id        String   @id @default(uuid())
-  survivorId  String
-  mapId     String
-  survivor survivor @relation(fields: [survivorId], references: [id])
-  playedAt DateTime @default(now())
-  perks survivorPerk[]
-  addOns          survivorAddOn[]
-  offerings       survivorOffering[]
-  map             map      @relation("maps", fields: [mapId], references: [id])
-  killer killer @relation("killerMatches", fields: [killerId], references: [id])
-  killerId String
-  numberOfRescues Int
+  id                     String             @id @default(uuid())
+  survivorId             String
+  mapId                  String
+  survivor               survivor           @relation(fields: [survivorId], references: [id])
+  playedAt               DateTime           @default(now())
+  perks                  survivorPerk[]
+  addOns                 survivorAddOn[]
+  offerings              survivorOffering[]
+  map                    map                @relation("maps", fields: [mapId], references: [id])
+  killer                 killer             @relation("killerMatches", fields: [killerId], references: [id])
+  killerId               String
+  numberOfRescues        Int
   numberOfGeneratorsDone Int
-  score Int
-  survivorWin Boolean
-  matchHistory    matchHistory[] @relation("matchHistorySurvivor")
-  objectId String?
-  survivorObject survivorObject? @relation(fields: [objectId], references: [id])
-  perkComboKey    String? @default("none")
+  score                  Int
+  survivorWin            Boolean
+  matchHistory           matchHistory[]     @relation("matchHistorySurvivor")
+  objectId               String?
+  survivorObject         survivorObject?    @relation(fields: [objectId], references: [id])
+  perkComboKey           String?            @default("none")
 }
 
 model matchHistory {
-  id        String   @id @default(uuid())
-  killerMatches    killerMatch[] @relation("matchHistoryKiller")
+  id              String          @id @default(uuid())
+  killerMatches   killerMatch[]   @relation("matchHistoryKiller")
   survivorMatches survivorMatch[] @relation("matchHistorySurvivor")
-  userId    String @unique
-  user      user     @relation(fields: [userId], references: [id])
-  killersPlayed killer[]
+  userId          String          @unique
+  user            user            @relation(fields: [userId], references: [id])
+  killersPlayed   killer[]
   survivorsPlayed survivor[]
 }

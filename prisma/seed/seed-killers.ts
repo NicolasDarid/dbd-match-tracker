@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../src/generated/prisma";
 
 const killers = [
   "The Hillbilly",
@@ -38,6 +38,7 @@ const killers = [
   "The Houndmaster",
   "The Ghoul",
   "The Animatronic",
+  "The Wraith",
 ];
 
 export async function seedKillers(prisma: PrismaClient) {
