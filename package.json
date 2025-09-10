@@ -10,7 +10,7 @@
     "security-check": "node scripts/security-check.js",
     "prebuild": "echo 'Skipping security check for development build...'",
     "build:no-lint": "next build --no-lint",
-    "postinstall": "prisma generate --no-engine",
+    "postinstall": "prisma generate",
     "setup": "node scripts/setup-database.mjs",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",

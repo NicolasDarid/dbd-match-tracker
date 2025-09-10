@@ -28,6 +28,7 @@ const nextConfig: NextConfig = {
     // Optimisation pour Prisma sur Vercel
     if (isServer) {
       config.externals.push("@prisma/client");
+      config.externals.push(".prisma/client");
     }
 
     return config;
