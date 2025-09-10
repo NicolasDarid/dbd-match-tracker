@@ -1,0 +1,42 @@
+# Ignorer les fichiers de développement
+node_modules
+.git
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignorer les fichiers de build locaux
+.next
+out
+dist
+
+# Ignorer les fichiers de logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorer les fichiers temporaires
+.tmp
+.temp
+
+# Ignorer les fichiers de test
+coverage
+.nyc_output
+
+# Ignorer les fichiers de documentation
+README.md
+*.md
+docs/
+
+# Ignorer les fichiers de configuration de développement
+.vscode
+.idea
+*.swp
+*.swo
+
+# Garder les fichiers Prisma nécessaires
+!prisma/schema.prisma
+!prisma/migrations/
+!src/generated/prisma/

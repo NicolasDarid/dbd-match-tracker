@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm run db:migrate:deploy && pnpm run build:no-lint",
+  "buildCommand": "pnpm run db:generate && pnpm run db:migrate:deploy && pnpm run build:no-lint",
   "installCommand": "pnpm install",
   "framework": "nextjs",
   "env": {

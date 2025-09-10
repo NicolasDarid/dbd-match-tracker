@@ -24,6 +24,12 @@ const nextConfig: NextConfig = {
         sqlite3: false,
       };
     }
+
+    // Optimisation pour Prisma sur Vercel
+    if (isServer) {
+      config.externals.push("@prisma/client");
+    }
+
     return config;
   },
   async headers() {
