@@ -38,9 +38,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${robotoCondensed.variable} antialiased bg-black`}
       >
         <Providers>
-          <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full p-4 ">
+          <div className="w-full m-auto h-full flex flex-col gap-4 min-h-full">
             <Header />
-            <main className="px-4 flex-1">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
             <CookieBanner />
             <Toaster />

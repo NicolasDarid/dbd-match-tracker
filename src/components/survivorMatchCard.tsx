@@ -3,7 +3,6 @@
 import { SurvivorMatchWithRelations } from "@/types/match";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
-import clsx from "clsx";
 import { Loader, Trash } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -41,12 +40,7 @@ export const SurvivorMatchCard = (props: {
   return (
     <Card
       key={match.id}
-      className={clsx(
-        "p-4 rounded-xl shadow-lg shadow-black/50 border border-blue-800/30 font-roboto text-white transition-all duration-300",
-        match.survivorWin
-          ? "bg-gradient-to-br from-zinc-900 via-black to-blue-950/40 hover:shadow-blue-900/40"
-          : "bg-gradient-to-br from-zinc-900 via-black to-red-950/40 hover:shadow-red-900/40"
-      )}
+      className="p-4 rounded-xl shadow-lg shadow-black/50 border border-blue-800/30 font-roboto text-white transition-all duration-300 bg-gradient-to-br from-zinc-900 via-black to-blue-950/40 hover:shadow-blue-900/40"
     >
       <CardContent>
         <div className="flex flex-row justify-between items-center mb-4">

@@ -3,7 +3,6 @@
 import { KillerMatchWithRelations } from "@/types/match";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
-import clsx from "clsx";
 import { Loader, Trash } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -39,10 +38,7 @@ export const KillerMatchCard = ({
   return (
     <Card
       key={match.id}
-      className={clsx(
-        "p-4 rounded-xl shadow-lg shadow-black/50 border border-red-800/30 font-roboto text-white transition-all duration-300",
-        "bg-gradient-to-br from-zinc-900 via-black to-red-950/40 hover:shadow-red-900/40"
-      )}
+      className="p-4 rounded-xl shadow-lg shadow-black/50 border border-red-800/60 font-roboto text-white transition-all duration-300 bg-gradient-to-br from-black to-red-950/60 hover:shadow-red-900/40"
     >
       <CardContent>
         <div className="flex justify-between items-center mb-4">

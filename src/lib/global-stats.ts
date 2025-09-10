@@ -16,6 +16,7 @@ export interface GlobalStats {
   avgHooksPerMatch: number;
   avgRescuesPerMatch: number;
   avgGeneratorsPerMatch: number;
+  averageScore: number;
 }
 
 export async function getGlobalStats(): Promise<GlobalStats> {
@@ -39,10 +40,12 @@ export async function getGlobalStats(): Promise<GlobalStats> {
     _sum: {
       numberOfKills: true,
       numberOfHooks: true,
+      score: true,
     },
     _avg: {
       numberOfKills: true,
       numberOfHooks: true,
+      score: true,
     },
   });
 
@@ -51,12 +54,21 @@ export async function getGlobalStats(): Promise<GlobalStats> {
     _sum: {
       numberOfRescues: true,
       numberOfGeneratorsDone: true,
+      score: true,
     },
     _avg: {
       numberOfRescues: true,
       numberOfGeneratorsDone: true,
+      score: true,
     },
   });
+
+  // Calculer le score moyen global
+  const totalKillerScore = killerStats._sum.score || 0;
+  const totalSurvivorScore = survivorStats._sum.score || 0;
+  const totalScore = totalKillerScore + totalSurvivorScore;
+  const averageScore =
+    totalMatches > 0 ? Math.round(totalScore / totalMatches) : 0;
 
   return {
     totalMatches,
@@ -76,6 +88,7 @@ export async function getGlobalStats(): Promise<GlobalStats> {
       Math.round((survivorStats._avg.numberOfRescues || 0) * 10) / 10,
     avgGeneratorsPerMatch:
       Math.round((survivorStats._avg.numberOfGeneratorsDone || 0) * 10) / 10,
+    averageScore,
   };
 }
 

@@ -34,29 +34,49 @@ export default async function Analytics() {
           <MostRecentSurvivorsCard />
         </div>
       </div>
-      <div className="min-lg:w-3/4 max-md:w-full h-full bg-gray-400/20 rounded-2xl">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4 ml-4">Killers</h2>
-          {mostPlayedKillers.map((killer) => (
-            <KillerStatsCard
-              killerId={killer.id || ""}
-              killerName={killer.name || ""}
-              killerImage={killer.image || null}
-              key={killer.id}
-            />
-          ))}
+      <div className="min-lg:w-3/4 h-full">
+        {/* Section Killers */}
+        <div id="killers-section" className="mb-6">
+          <div className="bg-gradient-to-r from-red-900/30 to-red-800/20 backdrop-blur-sm border-b border-red-500/30 p-4 rounded-t-2xl">
+            <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+              Killers Statistics
+            </h2>
+            <p className="text-red-200/80 text-sm">
+              Detailed performance metrics for all killers
+            </p>
+          </div>
+          <div className="p-4 bg-gray-700/20 rounded-b-2xl">
+            {mostPlayedKillers.map((killer) => (
+              <KillerStatsCard
+                killerId={killer.id || ""}
+                killerName={killer.name || ""}
+                killerImage={killer.image || null}
+                key={killer.id}
+              />
+            ))}
+          </div>
         </div>
 
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-4 ml-4">Survivors</h2>
-          {mostPlayedSurvivors.map((survivor) => (
-            <SurvivorStatsCard
-              survivorId={survivor.id || ""}
-              survivorName={survivor.name || ""}
-              survivorImage={survivor.image || null}
-              key={survivor.id}
-            />
-          ))}
+        {/* Section Survivors */}
+        <div id="survivors-section" className="mb-2">
+          <div className="bg-gradient-to-r from-blue-900/30 to-blue-800/20 backdrop-blur-sm border-b border-blue-500/30 p-4 rounded-t-2xl">
+            <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+              Survivors Statistics
+            </h2>
+            <p className="text-blue-200/80 text-sm">
+              Detailed performance metrics for all survivors
+            </p>
+          </div>
+          <div className="p-4 bg-gray-700/20 rounded-b-2xl">
+            {mostPlayedSurvivors.map((survivor) => (
+              <SurvivorStatsCard
+                survivorId={survivor.id || ""}
+                survivorName={survivor.name || ""}
+                survivorImage={survivor.image || null}
+                key={survivor.id}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -147,16 +167,19 @@ const KillerStatsCard = async ({
   const combos = await getTopPerkCombosByKiller(killerId);
 
   return (
-    <Card className="m-4 backdrop-blur-md  inset-shadow-sm inset-shadow-gray-400/40 bg-white/10 border border-white/10 shadow-lg rounded-xl transition-all duration-300 hover:bg-white/15 hover:border-white/20">
+    <Card className="m-4 backdrop-blur-md inset-shadow-sm inset-shadow-red-400/40 bg-gradient-to-br from-red-900/20 to-red-800/10 border border-red-500/30 shadow-lg rounded-xl transition-all duration-300 hover:bg-red-900/30 hover:border-red-400/50 hover:shadow-red-500/20">
       <CardHeader className="flex flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Image
-            src={killerImage || "/Loading_killer.webp"}
-            alt={killerName}
-            width={80}
-            height={80}
-          />
-          <CardTitle className="text-2xl font-semibold text-white underline decoration-white/50">
+          <div className="relative">
+            <Image
+              src={killerImage || "/Loading_killer.webp"}
+              alt={killerName}
+              width={80}
+              height={80}
+              className="rounded-lg border-2 border-red-400/30"
+            />
+          </div>
+          <CardTitle className="text-2xl font-semibold text-white underline decoration-red-400/50">
             {killerName}
           </CardTitle>
         </div>
@@ -241,16 +264,19 @@ const SurvivorStatsCard = async ({
   const combos = await getTopPerkCombosBySurvivor(survivorId);
 
   return (
-    <Card className="m-4 backdrop-blur-md  inset-shadow-sm inset-shadow-gray-400/40 bg-white/10 border border-white/10 shadow-lg rounded-xl transition-all duration-300 hover:bg-white/15 hover:border-white/20">
+    <Card className="m-4 backdrop-blur-md inset-shadow-sm inset-shadow-blue-400/40 bg-gradient-to-br from-blue-900/20 to-blue-800/10 border border-blue-500/30 shadow-lg rounded-xl transition-all duration-300 hover:bg-blue-900/30 hover:border-blue-400/50 hover:shadow-blue-500/20">
       <CardHeader className="flex flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Image
-            src={survivorImage || "/Loading_survivor.webp"}
-            alt={survivorName}
-            width={80}
-            height={80}
-          />
-          <CardTitle className="text-2xl font-semibold text-white underline decoration-white/50">
+          <div className="relative">
+            <Image
+              src={survivorImage || "/Loading_survivor.webp"}
+              alt={survivorName}
+              width={80}
+              height={80}
+              className="rounded-lg border-2 border-blue-400/30"
+            />
+          </div>
+          <CardTitle className="text-2xl font-semibold text-white underline decoration-blue-400/50">
             {survivorName}
           </CardTitle>
         </div>
