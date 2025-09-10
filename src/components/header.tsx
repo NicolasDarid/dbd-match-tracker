@@ -52,13 +52,13 @@ export default function Header() {
         <Link href="/" className="cursor-pointer">
           <Button className="cursor-pointer">History</Button>
         </Link>
-        <Link href="/stats/killer" className="cursor-pointer">
-          <Button className="cursor-pointer">Killer Stats</Button>
-        </Link>
         <Link href="/analytics" className="cursor-pointer">
           <Button className="cursor-pointer">Analytics</Button>
         </Link>
-        <Link href="/stats/survivor" className="cursor-pointer">
+        <Link href="/analytics/killer" className="cursor-pointer">
+          <Button className="cursor-pointer">Killer Stats</Button>
+        </Link>
+        <Link href="/analytics/survivor" className="cursor-pointer">
           <Button className="cursor-pointer">Survivor Stats</Button>
         </Link>
         <Link href="/legal" className="cursor-pointer">
