@@ -55,6 +55,9 @@ export default function Header() {
         <Link href="/stats/killer" className="cursor-pointer">
           <Button className="cursor-pointer">Killer Stats</Button>
         </Link>
+        <Link href="/analytics" className="cursor-pointer">
+          <Button className="cursor-pointer">Analytics</Button>
+        </Link>
         <Link href="/stats/survivor" className="cursor-pointer">
           <Button className="cursor-pointer">Survivor Stats</Button>
         </Link>
