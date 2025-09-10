@@ -56,14 +56,6 @@ BETTER_AUTH_URL="https://your-app.vercel.app"
 # Vérification d'email (désactivée pour commencer)
 REQUIRE_EMAIL_VERIFICATION="false"
 
-# Firebase
-NEXT_PUBLIC_FIREBASE_API_KEY="your_firebase_api_key"
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your_project.firebaseapp.com"
-NEXT_PUBLIC_FIREBASE_PROJECT_ID="your_project_id"
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your_project.appspot.com"
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your_sender_id"
-NEXT_PUBLIC_FIREBASE_APP_ID="your_app_id"
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID="your_measurement_id"
 ```
 
 ### 3.2. Configuration dans Vercel
@@ -90,7 +82,7 @@ npx prisma db seed
 
 ## 🔥 **Étape 5 : Firebase**
 
-### 5.1. Configuration Firebase
+### 5.1. Configuration Firebase (Si vous souhaitez utiliser Firebase, l'application fonctionne très bien sans)
 
 1. Aller sur [Firebase Console](https://console.firebase.google.com)
 2. Créer un projet ou utiliser un existant
@@ -191,7 +183,7 @@ REQUIRE_EMAIL_VERIFICATION="true"
 2. ✅ **Projet Vercel créé**
 3. ✅ **Variables d'environnement configurées**
 4. ✅ **Base de données configurée**
-5. ✅ **Firebase configuré**
+5. ✅ **Firebase configuré** (Optionnel)
 6. ✅ **Premier déploiement**
 7. ✅ **Tests de fonctionnement**
 8. ✅ **Configuration post-déploiement**

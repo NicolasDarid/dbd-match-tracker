@@ -10,7 +10,10 @@ export const auth = betterAuth({
   secret:
     process.env.BETTER_AUTH_SECRET ||
     "development-secret-key-minimum-32-characters",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL:
+    process.env.BETTER_AUTH_URL || process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000",
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: process.env.REQUIRE_EMAIL_VERIFICATION === "true", // Contrôlé par variable d'environnement
@@ -44,7 +47,12 @@ export const auth = betterAuth({
   },
   trustedOrigins:
     process.env.NODE_ENV === "production"
-      ? [process.env.BETTER_AUTH_URL || "https://dbd-match-tracker.vercel.app"]
+      ? [
+          process.env.BETTER_AUTH_URL ||
+            (process.env.VERCEL_URL
+              ? `https://${process.env.VERCEL_URL}`
+              : "https://dbd-match-tracker.vercel.app"),
+        ]
       : ["http://localhost:3000", "http://localhost:3001"],
   advanced: {
     generateId: () => crypto.randomUUID(),

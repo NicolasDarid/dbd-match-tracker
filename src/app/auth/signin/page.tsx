@@ -24,6 +24,7 @@ export default function Login() {
         if (session?.data?.user) {
           router.push("/");
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         // Ignorer les erreurs, l'utilisateur n'est pas connecté
       }
