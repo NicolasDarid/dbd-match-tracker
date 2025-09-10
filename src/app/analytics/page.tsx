@@ -15,6 +15,9 @@ import { getGlobalStats } from "@/lib/global-stats";
 import GlobalStatsCard from "@/components/globalStatsCard";
 import Image from "next/image";
 
+// Force la revalidation de la page à chaque requête
+export const revalidate = 0;
+
 export default async function Analytics() {
   const mostPlayedKillers = await getTopKillersByMatchCount();
   const mostPlayedSurvivors = await getTopSurvivorsByMatchCount();

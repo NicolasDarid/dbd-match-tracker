@@ -7,6 +7,9 @@ import {
 import Image from "next/image";
 import GlobalStatsSection from "@/components/globalStatsSection";
 
+// Force la revalidation de la page à chaque requête
+export const revalidate = 0;
+
 export default async function Stats() {
   const mostPlayedKillers = await getTopKillersByMatchCount();
 

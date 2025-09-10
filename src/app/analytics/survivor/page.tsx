@@ -7,6 +7,9 @@ import {
 } from "@/lib/survivor-stats";
 import Image from "next/image";
 
+// Force la revalidation de la page à chaque requête
+export const revalidate = 0;
+
 export default async function Stats() {
   const mostPlayedSurvivors = await getTopSurvivorsByMatchCount();
 
