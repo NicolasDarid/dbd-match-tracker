@@ -13,10 +13,11 @@ import {
 } from "@/lib/survivor-stats";
 import { getGlobalStats } from "@/lib/global-stats";
 import GlobalStatsCard from "@/components/globalStatsCard";
+import AuthGuard from "@/components/auth-guard";
 import Image from "next/image";
 
-// Force la revalidation de la page à chaque requête
-export const revalidate = 0;
+// Cache la page pendant 5 minutes (les données sont déjà mises en cache individuellement)
+export const revalidate = 300;
 
 export default async function Analytics() {
   const mostPlayedKillers = await getTopKillersByMatchCount();
@@ -24,62 +25,64 @@ export default async function Analytics() {
   const globalStats = await getGlobalStats();
 
   return (
-    <div className="flex flex-row max-h-full gap-4">
-      <div className="w-1/4 h-full bg-gray-700/20 rounded-2xl max-md:hidden">
-        <div className="m-4 space-y-4">
-          <GlobalStatsCard stats={globalStats} />
+    <AuthGuard>
+      <div className="flex flex-row max-h-full gap-4">
+        <div className="w-1/4 h-full bg-gray-700/20 rounded-2xl max-md:hidden">
+          <div className="m-4 space-y-4">
+            <GlobalStatsCard stats={globalStats} />
 
-          <MostRecentKillersCard />
+            <MostRecentKillersCard />
 
-          <MostRecentSurvivorsCard />
+            <MostRecentSurvivorsCard />
+          </div>
+        </div>
+        <div className="min-lg:w-3/4 h-full">
+          {/* Section Killers */}
+          <div id="killers-section" className="mb-6">
+            <div className="bg-gradient-to-r from-red-900/30 to-red-800/20 backdrop-blur-sm border-b border-red-500/30 p-4 rounded-t-2xl">
+              <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+                Killers Statistics
+              </h2>
+              <p className="text-red-200/80 text-sm">
+                Detailed performance metrics for all killers
+              </p>
+            </div>
+            <div className="p-4 bg-gray-700/20 rounded-b-2xl">
+              {mostPlayedKillers.map((killer) => (
+                <KillerStatsCard
+                  killerId={killer.id || ""}
+                  killerName={killer.name || ""}
+                  killerImage={killer.image || null}
+                  key={killer.id}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Section Survivors */}
+          <div id="survivors-section" className="mb-2">
+            <div className="bg-gradient-to-r from-blue-900/30 to-blue-800/20 backdrop-blur-sm border-b border-blue-500/30 p-4 rounded-t-2xl">
+              <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+                Survivors Statistics
+              </h2>
+              <p className="text-blue-200/80 text-sm">
+                Detailed performance metrics for all survivors
+              </p>
+            </div>
+            <div className="p-4 bg-gray-700/20 rounded-b-2xl">
+              {mostPlayedSurvivors.map((survivor) => (
+                <SurvivorStatsCard
+                  survivorId={survivor.id || ""}
+                  survivorName={survivor.name || ""}
+                  survivorImage={survivor.image || null}
+                  key={survivor.id}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-      <div className="min-lg:w-3/4 h-full">
-        {/* Section Killers */}
-        <div id="killers-section" className="mb-6">
-          <div className="bg-gradient-to-r from-red-900/30 to-red-800/20 backdrop-blur-sm border-b border-red-500/30 p-4 rounded-t-2xl">
-            <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-              Killers Statistics
-            </h2>
-            <p className="text-red-200/80 text-sm">
-              Detailed performance metrics for all killers
-            </p>
-          </div>
-          <div className="p-4 bg-gray-700/20 rounded-b-2xl">
-            {mostPlayedKillers.map((killer) => (
-              <KillerStatsCard
-                killerId={killer.id || ""}
-                killerName={killer.name || ""}
-                killerImage={killer.image || null}
-                key={killer.id}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Section Survivors */}
-        <div id="survivors-section" className="mb-2">
-          <div className="bg-gradient-to-r from-blue-900/30 to-blue-800/20 backdrop-blur-sm border-b border-blue-500/30 p-4 rounded-t-2xl">
-            <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-              Survivors Statistics
-            </h2>
-            <p className="text-blue-200/80 text-sm">
-              Detailed performance metrics for all survivors
-            </p>
-          </div>
-          <div className="p-4 bg-gray-700/20 rounded-b-2xl">
-            {mostPlayedSurvivors.map((survivor) => (
-              <SurvivorStatsCard
-                survivorId={survivor.id || ""}
-                survivorName={survivor.name || ""}
-                survivorImage={survivor.image || null}
-                key={survivor.id}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    </AuthGuard>
   );
 }
 

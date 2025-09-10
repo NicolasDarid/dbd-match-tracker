@@ -77,13 +77,12 @@ export default function Header() {
                   height={48}
                   className="rounded-lg border border-red-500/30 shadow-lg shadow-red-900/30 group-hover:shadow-red-900/50 transition-all duration-300"
                 />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-xl font-bold text-white font-roboto">
                   DBD Match Tracker
                 </h1>
-                <p className="text-xs text-gray-400">Survivor Hunter</p>
+                <p className="text-xs text-gray-400">Survivor or Hunter?</p>
               </div>
             </Link>
           </div>

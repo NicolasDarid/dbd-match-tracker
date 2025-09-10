@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
 import { getRequiredUser } from "@/lib/auth-session";
 import { revalidatePath } from "next/cache";
+import { invalidateStatsCache } from "@/lib/cache";
 
 const prisma = new PrismaClient();
 
@@ -162,7 +163,8 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // Revalider la page analytics après l'ajout d'un match
+  // Invalider le cache des statistiques et revalider la page analytics
+  invalidateStatsCache();
   revalidatePath("/analytics");
 
   return NextResponse.json({ success: true });
@@ -206,7 +208,8 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
-    // Revalider la page analytics après la suppression d'un match
+    // Invalider le cache des statistiques et revalider la page analytics
+    invalidateStatsCache();
     revalidatePath("/analytics");
 
     return NextResponse.json(data);
@@ -239,7 +242,8 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
-    // Revalider la page analytics après la suppression d'un match
+    // Invalider le cache des statistiques et revalider la page analytics
+    invalidateStatsCache();
     revalidatePath("/analytics");
 
     return NextResponse.json(data);

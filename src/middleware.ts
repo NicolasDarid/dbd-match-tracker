@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -43,33 +42,12 @@ export async function middleware(request: NextRequest) {
   if (pathname.startsWith("/auth/")) {
     // Vérifier que la requête vient d'une origine autorisée
     const origin = request.headers.get("origin");
-    // const referer = request.headers.get("referer");
 
     if (process.env.NODE_ENV === "production") {
       const allowedOrigins = [process.env.BETTER_AUTH_URL];
       if (origin && !allowedOrigins.includes(origin)) {
         return new NextResponse("Forbidden", { status: 403 });
       }
-    }
-  }
-
-  // Protection des routes protégées
-  if (pathname.startsWith("/match/") || pathname === "/analytics") {
-    try {
-      const session = await auth.api.getSession({
-        headers: request.headers,
-      });
-
-      if (!session?.user) {
-        const signInUrl = new URL("/auth/signin", request.url);
-        signInUrl.searchParams.set("redirect", pathname);
-        return NextResponse.redirect(signInUrl);
-      }
-    } catch (error) {
-      console.error("Auth middleware error:", error);
-      const signInUrl = new URL("/auth/signin", request.url);
-      signInUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(signInUrl);
     }
   }
 
