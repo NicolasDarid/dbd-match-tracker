@@ -22,7 +22,10 @@ export default function SignUp() {
       try {
         const session = await authClient.getSession();
         if (session?.data?.user) {
-          router.push("/");
+          // Récupérer l'URL de redirection depuis les paramètres de requête
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectTo = urlParams.get("redirect") || "/";
+          router.push(redirectTo);
         }
       } catch (error) {
         // Ignorer les erreurs, l'utilisateur n'est pas connecté
@@ -44,8 +47,10 @@ export default function SignUp() {
         onSuccess: () => {
           setIsLoading(false);
           // L'utilisateur est automatiquement connecté après l'inscription
-          // On le redirige vers la page d'accueil
-          router.push("/");
+          // Récupérer l'URL de redirection depuis les paramètres de requête
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectTo = urlParams.get("redirect") || "/";
+          router.push(redirectTo);
           router.refresh();
         },
         onError: (ctx: { error: { message: string } }) => {

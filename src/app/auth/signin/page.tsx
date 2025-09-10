@@ -22,7 +22,11 @@ export default function Login() {
       try {
         const session = await authClient.getSession();
         if (session?.data?.user) {
-          router.push("/");
+          // Récupérer l'URL de redirection depuis les paramètres de requête
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectTo = urlParams.get("redirect") || "/";
+          router.push(redirectTo);
+          router.refresh();
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
@@ -41,7 +45,10 @@ export default function Login() {
       onRequest: () => setIsLoading(true),
       onSuccess: () => {
         setIsLoading(false);
-        router.push("/");
+        // Récupérer l'URL de redirection depuis les paramètres de requête
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectTo = urlParams.get("redirect") || "/";
+        router.push(redirectTo);
         router.refresh();
       },
       onError: (ctx: { error: { message: string } }) => {

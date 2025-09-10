@@ -61,11 +61,15 @@ export async function middleware(request: NextRequest) {
       });
 
       if (!session?.user) {
-        return NextResponse.redirect(new URL("/auth/signin", request.url));
+        const signInUrl = new URL("/auth/signin", request.url);
+        signInUrl.searchParams.set("redirect", pathname);
+        return NextResponse.redirect(signInUrl);
       }
     } catch (error) {
       console.error("Auth middleware error:", error);
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
+      const signInUrl = new URL("/auth/signin", request.url);
+      signInUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(signInUrl);
     }
   }
 
