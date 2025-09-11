@@ -13,7 +13,7 @@ export async function GET() {
 
     const stats = {
       size: cache.size(),
-      keys: Array.from((cache as any).cache.keys()),
+      keys: cache.keys(),
     };
 
     return NextResponse.json(stats);

@@ -29,12 +29,12 @@ export const MatchHistoryClient = ({
   const survivorCount = matchHistory.survivorMatches.length;
 
   return (
-    <Card className="bg-blue-400/40 backdrop-blur-md border border-border/50 shadow-2xl">
+    <Card className="bg-slate-400/30 backdrop-blur-md border border-border/50 shadow-2xl">
       <CardHeader className="border-b border-border/50 pb-6">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3 font-roboto">
-              <TrendingUp className="w-6 h-6 text-primary" />
+              <TrendingUp className="w-6 h-6 text-red-500" />
               Match History
             </CardTitle>
           </div>

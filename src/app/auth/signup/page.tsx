@@ -29,6 +29,7 @@ export default function SignUp() {
         }
       } catch (error) {
         // Ignorer les erreurs, l'utilisateur n'est pas connecté
+        console.debug("User not authenticated:", error);
       }
     };
     checkAuth();

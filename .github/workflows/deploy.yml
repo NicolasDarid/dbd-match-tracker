@@ -3,7 +3,7 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - main # ou master selon ton repo
+      - master # ou master selon ton repo
 
 jobs:
   deploy:
@@ -26,7 +26,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # 5. Déployer la base de données
+      # 5. Vérification TypeScript
+      - name: TypeScript Check
+        run: pnpm tsc --noEmit
+
+      # 6. Lint du projet (Prisma ignoré via .eslintignore)
+      - name: Lint Project
+        run: pnpm run lint
+
+      # 7. Déployer la base de données
       - name: Run Prisma Migrations & Seed
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -34,11 +42,11 @@ jobs:
           pnpm run db:migrate:deploy
           pnpm run db:seed
 
-      # 6. Build du projet
+      # 8. Build du projet
       - name: Build Project
-        run: pnpm run build:no-lint
+        run: pnpm run build
 
-      # 7. Déployer sur Vercel
+      # 9. Déployer sur Vercel
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

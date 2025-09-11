@@ -9,6 +9,7 @@
   },
   "ignorePatterns": [
     "src/generated/**/*",
+    "prisma/**/*",
     "node_modules/**/*",
     ".next/**/*",
     "**/*.js",

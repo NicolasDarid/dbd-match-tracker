@@ -5,8 +5,8 @@ import { getRequiredUser } from "@/lib/auth-session";
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const user = await getRequiredUser();
+  // Vérifier l'authentification (nécessaire pour la sécurité)
+  await getRequiredUser();
   const killerId = req.nextUrl.searchParams.get("killerId");
 
   if (!killerId) {

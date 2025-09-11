@@ -1,6 +1,6 @@
 "use client";
 
-import { Cookie, Settings } from "lucide-react";
+import { Cookie } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import CookieSettings from "@/components/cookieSettings";

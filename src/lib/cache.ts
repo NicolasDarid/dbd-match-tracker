@@ -10,7 +10,7 @@ interface CacheItem<T> {
 }
 
 class MemoryCache {
-  private cache = new Map<string, CacheItem<any>>();
+  private cache = new Map<string, CacheItem<unknown>>();
   private defaultTTL = 5 * 60 * 1000; // 5 minutes par défaut
 
   /**
@@ -29,7 +29,7 @@ class MemoryCache {
       return null;
     }
 
-    return item.data;
+    return item.data as T;
   }
 
   /**
@@ -87,6 +87,13 @@ class MemoryCache {
   size(): number {
     return this.cache.size;
   }
+
+  /**
+   * Retourne les clés du cache (pour debug)
+   */
+  keys(): string[] {
+    return Array.from(this.cache.keys());
+  }
 }
 
 // Instance globale du cache
@@ -103,12 +110,10 @@ export async function withCache<T>(
   // Essayer de récupérer depuis le cache
   const cached = cache.get<T>(key);
   if (cached !== null) {
-    console.log(`Cache HIT: ${key}`);
     return cached;
   }
 
   // Si pas en cache, exécuter la fonction et mettre en cache
-  console.log(`Cache MISS: ${key}`);
   const result = await fn();
   cache.set(key, result, ttl);
   return result;
@@ -134,7 +139,6 @@ export const CACHE_KEYS = {
  * Invalide le cache lié aux statistiques (à appeler après ajout/suppression de matchs)
  */
 export function invalidateStatsCache(): void {
-  console.log("Invalidation du cache des statistiques");
   cache.deletePattern(
     "^(global_stats|top_killers|top_survivors|recent_killers|recent_survivors|killer_stats_|survivor_stats_|killer_perk_combos_|survivor_perk_combos_)"
   );
@@ -144,7 +148,6 @@ export function invalidateStatsCache(): void {
  * Invalide tout le cache
  */
 export function invalidateAllCache(): void {
-  console.log("Invalidation de tout le cache");
   cache.clear();
 }
 

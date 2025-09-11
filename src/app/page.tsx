@@ -49,7 +49,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-950">
       {/* Header Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden mb-4">
         <div className="absolute inset-0 bg-gradient-to-r from-red-900/20 via-transparent to-blue-900/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">

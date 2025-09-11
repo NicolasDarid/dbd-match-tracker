@@ -109,7 +109,6 @@ export const SurvivorFormWithQuery = (props: {
   });
 
   const onSubmit = async (data: z.infer<typeof survivorFormSchema>) => {
-    console.log(data);
     setIsLoading(true);
     const response = await fetch("/api/match/add", {
       method: "POST",
@@ -424,7 +423,7 @@ export const SurvivorFormWithQuery = (props: {
             />
           </div>
 
-          <Button type="submit" onClick={() => console.log("click")}>
+          <Button type="submit">
             {isLoading ? <Loader className="animate-spin" /> : "Add Match"}
           </Button>
         </form>

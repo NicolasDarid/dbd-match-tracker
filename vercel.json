@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node prisma/vercel-build.js && pnpm run db:migrate:deploy && pnpm run build:no-lint",
+  "buildCommand": "node prisma/vercel-build.js && pnpm run db:migrate:deploy && pnpm run build",
   "installCommand": "pnpm install",
   "framework": "nextjs",
   "env": {

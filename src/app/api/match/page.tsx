@@ -8,8 +8,7 @@ import { Button } from "@/components/ui/button";
 const prisma = new PrismaClient();
 
 export default async function AddMatch() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const user = await getRequiredUser();
+  await getRequiredUser();
 
   const killers = await prisma.killer.findMany();
   const survivors = await prisma.survivor.findMany();
