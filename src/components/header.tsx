@@ -12,7 +12,6 @@ import Link from "next/link";
 import { LogoutButton } from "./logout";
 import CookieIndicator from "./cookieIndicator";
 import Image from "next/image";
-import logo from "../../public/logo.png";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -71,7 +70,7 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <Image
-                  src={logo}
+                  src={"/logo.png"}
                   alt="DBD Match Tracker"
                   width={48}
                   height={48}
