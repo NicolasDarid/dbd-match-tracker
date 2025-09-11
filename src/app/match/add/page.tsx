@@ -6,6 +6,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { withCache, CACHE_KEYS } from "@/lib/cache";
 
+// Désactiver la génération statique car la page utilise des données de base de données dynamiques
+export const revalidate = 0;
+
 const prisma = new PrismaClient();
 
 export default async function AddMatch() {
@@ -64,7 +67,7 @@ export default async function AddMatch() {
 
   return (
     <AuthGuard>
-      <Card className="max-w-4xl mx-auto">
+      <Card className="max-w-4xl mx-auto bg-slate-400/30 backdrop-blur-md border border-border/50 shadow-2xl rounded-lg p-4">
         <CardHeader>
           <div className="flex flex-row justify-between items-center">
             <CardTitle className="text-center text-2xl flex-1">

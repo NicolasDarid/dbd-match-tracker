@@ -55,7 +55,7 @@ export const MatchHistoryClient = ({
               Killer Matches
               <Badge
                 variant="secondary"
-                className="ml-2 bg-red-500/20 text-red-400"
+                className="ml-2 bg-red-500/60 text-white"
               >
                 {killerCount}
               </Badge>
@@ -74,7 +74,7 @@ export const MatchHistoryClient = ({
               Survivor Matches
               <Badge
                 variant="secondary"
-                className="ml-2 bg-blue-500/20 text-blue-400"
+                className="ml-2 bg-blue-500/80 text-white"
               >
                 {survivorCount}
               </Badge>
@@ -148,7 +148,7 @@ const KillerMatchHistory = ({
       >
         <div className="flex items-center gap-3">
           <Skull className="w-6 h-6 text-red-500" />
-          <h2 className="font-roboto text-2xl font-bold text-foreground">
+          <h2 className="font-roboto text-2xl font-bold text-red-500">
             Killer History
           </h2>
           <Badge
@@ -253,7 +253,7 @@ const SurvivorMatchHistory = ({
       >
         <div className="flex items-center gap-3">
           <Shield className="w-6 h-6 text-blue-500" />
-          <h2 className="font-roboto text-2xl font-bold text-foreground">
+          <h2 className="font-roboto text-2xl font-bold text-blue-500">
             Survivor History
           </h2>
           <Badge

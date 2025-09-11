@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import Image from "next/image";
-import { Loader } from "lucide-react";
+import { Loader, Skull } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { z } from "zod";
@@ -35,7 +35,6 @@ import { PerkMultiSelect } from "./perkMultiSelect";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
 import { AddOnMultiSelect } from "./addOnMultiSelect";
-import { VisualHelper } from "./visualHelper";
 import { MapSelect } from "./mapSelect";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
@@ -123,17 +122,19 @@ export const KillerFormWithQuery = (props: {
 
   return (
     <>
-      <VisualHelper variant="killer" />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="flex flex-row justify-between items-center">
-            {/* Killer */}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {/* Character and Map Selection */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Killer Selection */}
             <FormField
               control={form.control}
               name="killerId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-bold">Killer</FormLabel>
+                  <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+                    Killer
+                  </FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value);
@@ -141,27 +142,37 @@ export const KillerFormWithQuery = (props: {
                     value={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-gray-700/80 border-border/50 !text-white hover:bg-gray-600/50 focus:ring-red-500/50">
                         <SelectValue placeholder="Select a killer" />
-                        <SelectContent>
+                        <SelectContent className="bg-gray-800 border-gray-600">
                           {killers.map((killer) => (
-                            <SelectItem key={killer.id} value={killer.id}>
-                              {killer.image ? (
-                                <Image
-                                  src={killer.image}
-                                  alt={killer.name}
-                                  width={50}
-                                  height={50}
-                                />
-                              ) : (
-                                <Image
-                                  src="/Loading_killer.webp"
-                                  alt={killer.name}
-                                  width={50}
-                                  height={50}
-                                />
-                              )}
-                              {killer.name}
+                            <SelectItem
+                              key={killer.id}
+                              value={killer.id}
+                              className="text-white hover:bg-gray-700 focus:bg-gray-700"
+                            >
+                              <div className="flex items-center gap-3">
+                                {killer.image ? (
+                                  <Image
+                                    src={killer.image}
+                                    alt={killer.name}
+                                    width={40}
+                                    height={40}
+                                    className="rounded border border-red-500/50"
+                                  />
+                                ) : (
+                                  <Image
+                                    src="/Loading_killer.webp"
+                                    alt={killer.name}
+                                    width={40}
+                                    height={40}
+                                    className="rounded border border-red-500/50"
+                                  />
+                                )}
+                                <span className="font-medium">
+                                  {killer.name}
+                                </span>
+                              </div>
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -172,32 +183,36 @@ export const KillerFormWithQuery = (props: {
                 </FormItem>
               )}
             />
-            {/* Map */}
+            {/* Map Selection */}
             <MapSelector maps={maps} />
           </div>
-          <div className="flex flex-row gap-4">
-            {/* Perks */}
+          {/* Perks Section */}
+          <div className="bg-gradient-to-r from-red-800/20 to-gray-700/10 border border-border/30 rounded-xl p-6">
             <PerkSelector perks={perks} />
           </div>
 
-          {/* AddOns */}
+          {/* AddOns Section */}
           {isAddOnsLoading && (
-            <div>
-              <p className="text-lg font-bold">Add-ons</p>
-              <Skeleton className="h-6 w-full rounded-md" />
+            <div className="bg-gradient-to-r from-gray-800/20 to-gray-700/10 border border-gray-500/30 rounded-xl p-6">
+              <p className="text-xl font-bold text-white mb-4">Add-ons</p>
+              <Skeleton className="h-12 w-full rounded-md bg-gray-700/50" />
             </div>
           )}
           {isError && (
-            <p className="text-red-500 text-sm">Failed to load add-ons.</p>
+            <div className="bg-gradient-to-r from-red-900/20 to-red-800/10 border border-red-500/30 rounded-xl p-6">
+              <p className="text-red-400 text-sm">Failed to load add-ons.</p>
+            </div>
           )}
           {addOns?.length > 0 && (
-            <div className="flex flex-row gap-4">
+            <div className="bg-gradient-to-r from-red-800/20 to-gray-700/10 border border-border/30 rounded-xl p-6">
               <FormField
                 control={form.control}
                 name="addOns"
                 render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel className="text-lg font-bold">Add-ons</FormLabel>
+                  <FormItem>
+                    <FormLabel className="text-xl font-bold text-white">
+                      Add-ons
+                    </FormLabel>
                     <FormControl>
                       <AddOnMultiSelect
                         addOns={addOns || []}
@@ -217,102 +232,134 @@ export const KillerFormWithQuery = (props: {
               />
             </div>
           )}
-          <div className="flex flex-row gap-4">
-            {/* Offering */}
+
+          {/* Offering Section */}
+          <div className="bg-gradient-to-r from-red-800/20 to-gray-700/10 border border-border/30 rounded-xl p-6">
             <OfferingSelector offering={offering} />
           </div>
 
-          <div className="flex flex-row gap-4 justify-between">
-            {/* Number of Hooks */}
-            <FormField
-              control={form.control}
-              name="numberOfHooks"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">
-                    Number of Hooks
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      min={0}
-                      max={12}
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Number of Kills */}
-            <FormField
-              control={form.control}
-              name="numberOfKills"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">
-                    Number of Kills
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      min={0}
-                      max={4}
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Number of Generators Remaining */}
-            <FormField
-              control={form.control}
-              name="numberOfGeneratorsRemaining"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">
-                    Number of Generators Remaining
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      min={0}
-                      max={5}
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Score */}
-            <FormField
-              control={form.control}
-              name="score"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">Score</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      min={0}
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          {/* Statistics Section */}
+          <div className="bg-gradient-to-r from-red-800/20 to-gray-700/10 border border-border/30 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              <Skull className="w-5 h-5 text-red-400" />
+              Match Statistics
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Number of Hooks */}
+              <FormField
+                control={form.control}
+                name="numberOfHooks"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Number of Hooks
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={12}
+                        value={field.value}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 focus:ring-red-500/50 focus:border-red-500/50"
+                        placeholder="0-12"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Number of Kills */}
+              <FormField
+                control={form.control}
+                name="numberOfKills"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Number of Kills
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={4}
+                        value={field.value}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 focus:ring-red-500/50 focus:border-red-500/50"
+                        placeholder="0-4"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Number of Generators Remaining */}
+              <FormField
+                control={form.control}
+                name="numberOfGeneratorsRemaining"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Generators Left
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={5}
+                        value={field.value}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 focus:ring-red-500/50 focus:border-red-500/50"
+                        placeholder="0-5"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Score */}
+              <FormField
+                control={form.control}
+                name="score"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Score
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        value={field.value}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 focus:ring-red-500/50 focus:border-red-500/50"
+                        placeholder="0+"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? <Loader className="animate-spin" /> : "Add Match"}
-          </Button>
+          {/* Submit Button */}
+          <div className="flex justify-center pt-6">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-red-900/50 border border-red-500/30 min-w-[200px]"
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader className="animate-spin w-5 h-5" />
+                  <span>Adding Match...</span>
+                </div>
+              ) : (
+                "Add Match"
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </>
@@ -328,7 +375,9 @@ const MapSelector = (props: { maps: Map[] }) => {
       name="mapId"
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="text-lg font-bold">Map</FormLabel>
+          <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+            Map
+          </FormLabel>
           <FormControl>
             <MapSelect
               maps={maps}
@@ -352,8 +401,10 @@ const PerkSelector = (props: { perks: KillerPerk[] | SurvivorPerk[] }) => {
       control={control}
       name="perks"
       render={({ field }) => (
-        <FormItem className="w-full">
-          <FormLabel className="text-lg font-bold">Perks</FormLabel>
+        <FormItem>
+          <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+            Perks
+          </FormLabel>
           <FormControl>
             <PerkMultiSelect
               perks={perks}
@@ -381,8 +432,10 @@ const OfferingSelector = (props: {
       control={control}
       name="offering"
       render={({ field }) => (
-        <FormItem className="w-full">
-          <FormLabel className="text-lg font-bold">Offering</FormLabel>
+        <FormItem>
+          <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+            Offering
+          </FormLabel>
           <FormControl>
             <AddOnMultiSelect
               addOns={offering}

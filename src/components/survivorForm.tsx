@@ -34,7 +34,6 @@ import { PerkMultiSelect } from "./perkMultiSelect";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
 import { AddOnMultiSelect } from "./addOnMultiSelect";
-import { VisualHelper } from "./visualHelper";
 import { MapSelect } from "./mapSelect";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "./ui/skeleton";
@@ -132,186 +131,192 @@ export const SurvivorFormWithQuery = (props: {
 
   return (
     <>
-      <VisualHelper variant="survivor" />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="flex flex-row justify-between items-center">
-            {/* Survivor */}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {/* Character and Map Selection */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Survivor Selection */}
             <FormField
               control={form.control}
               name="survivorId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-bold">Survivor</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                    }}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a survivor" />
-                        <SelectContent>
-                          {survivors.map((survivor) => (
-                            <SelectItem key={survivor.id} value={survivor.id}>
-                              {survivor.image ? (
-                                <Image
-                                  src={survivor.image}
-                                  alt={survivor.name}
-                                  width={50}
-                                  height={50}
-                                />
-                              ) : (
-                                <Image
-                                  src="/Loading_survivor.webp"
-                                  alt={survivor.name}
-                                  width={50}
-                                  height={50}
-                                />
-                              )}
-                              {survivor.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </SelectTrigger>
-                    </FormControl>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Map */}
-            <MapSelector maps={maps} />
-
-            {/* Killer */}
-            <FormField
-              control={form.control}
-              name="killerId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">Killer</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                    }}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a killer" />
-                        <SelectContent>
-                          {killers.map((killer) => (
-                            <SelectItem key={killer.id} value={killer.id}>
-                              {killer.image ? (
-                                <Image
-                                  src={killer.image}
-                                  alt={killer.name}
-                                  width={50}
-                                  height={50}
-                                />
-                              ) : (
-                                <Image
-                                  src="/Loading_killer.webp"
-                                  alt={killer.name}
-                                  width={50}
-                                  height={50}
-                                />
-                              )}
-                              {killer.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </SelectTrigger>
-                    </FormControl>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="flex flex-row gap-4">
-            {/* Perks */}
-            <PerkSelector perks={perks} />
-          </div>
-
-          {/* Object */}
-          <FormField
-            control={form.control}
-            name="objectId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg font-bold">
-                  Object (Optional)
-                </FormLabel>
-                <Select
-                  onValueChange={(value) => {
-                    field.onChange(value === "none" ? "" : value);
-                  }}
-                  value={field.value || "none"}
-                >
+                  <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+                    Survivor
+                  </FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select an object" />
-                      <SelectContent>
-                        <SelectItem value="none">
-                          <div className="flex items-center gap-2">
-                            <Image
-                              src="/Placeholder_addons.webp"
-                              alt="No object"
-                              width={50}
-                              height={50}
-                            />
-                            None
-                          </div>
-                        </SelectItem>
-                        {objects.map((object) => (
-                          <SelectItem key={object.id} value={object.id}>
-                            {object.image ? (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="bg-gray-700/80 border-border/50 !text-white hover:bg-gray-600/50 focus:ring-blue-500/50">
+                        <SelectValue placeholder="Select a survivor" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-600">
+                        {survivors.map((survivor) => (
+                          <SelectItem
+                            key={survivor.id}
+                            value={survivor.id}
+                            className="text-white hover:bg-gray-700 focus:bg-gray-700"
+                          >
+                            <div className="flex items-center gap-3">
                               <Image
-                                src={object.image}
-                                alt={object.name}
-                                width={50}
-                                height={50}
+                                src={survivor.image || "/Loading_survivor.webp"}
+                                alt={survivor.name}
+                                width={40}
+                                height={40}
+                                className="rounded"
                               />
-                            ) : (
-                              <Image
-                                src="/Placeholder_addons.webp"
-                                alt={object.name}
-                                width={50}
-                                height={50}
-                              />
-                            )}
-                            {object.name}
+                              <span className="font-medium">
+                                {survivor.name}
+                              </span>
+                            </div>
                           </SelectItem>
                         ))}
                       </SelectContent>
-                    </SelectTrigger>
+                    </Select>
                   </FormControl>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Map Selection */}
+            <MapSelector maps={maps} />
+            {/* Killer Selection */}
+            <div className="flex min-lg:justify-end">
+              <FormField
+                control={form.control}
+                name="killerId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+                      Killer
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger className="bg-gray-700/80 border-border/50 !text-white hover:bg-gray-600/50 focus:ring-red-500/50">
+                          <SelectValue placeholder="Select a killer" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-800 border-gray-600">
+                          {killers.map((killer) => (
+                            <SelectItem
+                              key={killer.id}
+                              value={killer.id}
+                              className="text-white hover:bg-gray-700 focus:bg-gray-700"
+                            >
+                              <div className="flex items-center gap-3">
+                                <Image
+                                  src={killer.image || "/Loading_killer.webp"}
+                                  alt={killer.name}
+                                  width={40}
+                                  height={40}
+                                  className="rounded"
+                                />
+                                <span className="font-medium">
+                                  {killer.name}
+                                </span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          {/* Perks Section */}
+          <div className="bg-gradient-to-r from-blue-800/30 to-gray-700/10 border border-border/30 rounded-xl p-6">
+            <PerkSelector perks={perks} />
+          </div>
 
-          {/* AddOns */}
+          {/* Object Section */}
+          <div className="bg-gradient-to-r from-blue-800/30 to-gray-700/10 border border-border/30 rounded-xl p-6">
+            <FormField
+              control={form.control}
+              name="objectId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+                    Item (Optional)
+                  </FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={(value) => {
+                        field.onChange(value === "none" ? "" : value);
+                      }}
+                      value={field.value || "none"}
+                    >
+                      <SelectTrigger className="bg-gray-700/80 border-border/50 !text-white hover:bg-gray-600/50 focus:ring-blue-500/50">
+                        <SelectValue placeholder="Select an item" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-600">
+                        <SelectItem
+                          value="none"
+                          className="text-white hover:bg-gray-700 focus:bg-gray-700"
+                        >
+                          <div className="flex items-center gap-3">
+                            <Image
+                              src="/Placeholder_addons.webp"
+                              alt="No item"
+                              width={40}
+                              height={40}
+                              className="rounded"
+                            />
+                            <span className="font-medium">None</span>
+                          </div>
+                        </SelectItem>
+                        {objects.map((object) => (
+                          <SelectItem
+                            key={object.id}
+                            value={object.id}
+                            className="text-white hover:bg-gray-700 focus:bg-gray-700"
+                          >
+                            <div className="flex items-center gap-3">
+                              <Image
+                                src={object.image || "/Placeholder_addons.webp"}
+                                alt={object.name}
+                                width={40}
+                                height={40}
+                                className="rounded"
+                              />
+                              <span className="font-medium">{object.name}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* AddOns Section */}
           {isAddOnsLoading && (
-            <div>
-              <p className="text-lg font-bold">Add-ons</p>
-              <Skeleton className="h-6 w-full rounded-md" />
+            <div className="bg-gradient-to-r from-blue-800/30 to-gray-700/10 border border-border/30 rounded-xl p-6">
+              <p className="text-xl font-bold text-white mb-4">Add-ons</p>
+              <Skeleton className="h-12 w-full rounded-md bg-gray-700/50" />
             </div>
           )}
           {isError && (
-            <p className="text-red-500 text-sm">Failed to load add-ons.</p>
+            <div className="bg-gradient-to-r from-blue-800/30 to-gray-700/10 border border-border/30 rounded-xl p-6">
+              <p className="text-red-400 text-sm">Failed to load add-ons.</p>
+            </div>
           )}
           {addOns?.length > 0 && (
-            <div className="flex flex-row gap-4">
+            <div className="bg-gradient-to-r from-blue-800/30 to-gray-700/10 border border-border/30 rounded-xl p-6">
               <FormField
                 control={form.control}
                 name="addOns"
                 render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel className="text-lg font-bold">Add-ons</FormLabel>
+                  <FormItem>
+                    <FormLabel className="text-xl font-bold text-white">
+                      Add-ons
+                    </FormLabel>
                     <FormControl>
                       <AddOnMultiSelect
                         addOns={addOns || []}
@@ -332,100 +337,133 @@ export const SurvivorFormWithQuery = (props: {
             </div>
           )}
 
-          <div className="flex flex-row gap-4">
-            {/* Offerings */}
+          {/* Offering Section */}
+          <div className="bg-gradient-to-r from-blue-800/30 to-gray-700/10 border border-border/30 rounded-xl p-6">
             <OfferingSelector offerings={offerings} />
           </div>
 
-          <div className="flex flex-row gap-4 justify-between">
-            {/* Escaped */}
-            <FormField
-              control={form.control}
-              name="escaped"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">Escaped</FormLabel>
-                  <FormControl>
-                    <div className="flex items-center gap-2 justify-center">
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
+          {/* Statistics Section */}
+          <div className="bg-gradient-to-r from-blue-800/30 to-gray-700/10 border border-border/30 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              Match Statistics
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Escaped */}
+              <FormField
+                control={form.control}
+                name="escaped"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Escaped
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex items-center gap-3 justify-center p-3 bg-gray-700/50 rounded-lg border border-gray-600/50">
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
+                        />
+                        <Label className="text-white font-medium">
+                          {field.value ? "Yes" : "No"}
+                        </Label>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Number of Rescues */}
+              <FormField
+                control={form.control}
+                name="numberOfRescues"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Number of Rescues
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={4}
+                        value={field.value}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 focus:ring-blue-500/50 focus:border-blue-500/50"
+                        placeholder="0-4"
                       />
-                      <Label>{field.value ? "Yes" : "No"}</Label>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Number of Rescues */}
-            <FormField
-              control={form.control}
-              name="numberOfRescues"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">
-                    Number of Rescues
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      min={0}
-                      max={4}
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Number of Generators Done */}
-            <FormField
-              control={form.control}
-              name="numberOfGeneratorsDone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">
-                    Number of Generators Done
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      min={0}
-                      max={5}
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Score */}
-            <FormField
-              control={form.control}
-              name="score"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-bold">Score</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      min={0}
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Number of Generators Done */}
+              <FormField
+                control={form.control}
+                name="numberOfGeneratorsDone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Generators Done
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        max={5}
+                        value={field.value}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 focus:ring-blue-500/50 focus:border-blue-500/50"
+                        placeholder="0-5"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Score */}
+              <FormField
+                control={form.control}
+                name="score"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg font-bold text-white">
+                      Score
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        value={field.value}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="bg-gray-700/50 border-gray-600/50 text-white placeholder-gray-400 focus:ring-blue-500/50 focus:border-blue-500/50"
+                        placeholder="0+"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
-          <Button type="submit">
-            {isLoading ? <Loader className="animate-spin" /> : "Add Match"}
-          </Button>
+          {/* Submit Button */}
+          <div className="flex justify-center pt-6">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-900/50 border border-blue-500/30 min-w-[200px]"
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <Loader className="animate-spin w-5 h-5" />
+                  <span>Adding match...</span>
+                </div>
+              ) : (
+                "Add match"
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </>
@@ -441,7 +479,9 @@ const MapSelector = (props: { maps: Map[] }) => {
       name="mapId"
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="text-lg font-bold">Map</FormLabel>
+          <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+            Map
+          </FormLabel>
           <FormControl>
             <MapSelect
               maps={maps}
@@ -465,8 +505,10 @@ const PerkSelector = (props: { perks: SurvivorPerk[] }) => {
       control={control}
       name="perks"
       render={({ field }) => (
-        <FormItem className="w-full">
-          <FormLabel className="text-lg font-bold">Perks</FormLabel>
+        <FormItem>
+          <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+            Perks
+          </FormLabel>
           <FormControl>
             <PerkMultiSelect
               perks={perks}
@@ -492,8 +534,10 @@ const OfferingSelector = (props: { offerings: SurvivorOffering[] }) => {
       control={control}
       name="offerings"
       render={({ field }) => (
-        <FormItem className="w-full">
-          <FormLabel className="text-lg font-bold">Offerings</FormLabel>
+        <FormItem>
+          <FormLabel className="text-xl font-bold text-white flex items-center gap-2">
+            Offerings
+          </FormLabel>
           <FormControl>
             <AddOnMultiSelect
               addOns={offerings}

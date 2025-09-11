@@ -16,8 +16,8 @@ import GlobalStatsCard from "@/components/globalStatsCard";
 import AuthGuard from "@/components/auth-guard";
 import Image from "next/image";
 
-// Cache la page pendant 5 minutes (les données sont déjà mises en cache individuellement)
-export const revalidate = 300;
+// Désactiver la génération statique car la page utilise des données de statistiques dynamiques
+export const revalidate = 0;
 
 export default async function Analytics() {
   const mostPlayedKillers = await getTopKillersByMatchCount();

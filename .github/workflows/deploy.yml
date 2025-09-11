@@ -34,19 +34,11 @@ jobs:
       - name: Lint Project
         run: pnpm run lint
 
-      # 7. Déployer la base de données
-      - name: Run Prisma Migrations & Seed
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          pnpm run db:migrate:deploy
-          pnpm run db:seed
-
-      # 8. Build du projet
+      # 7. Build du projet
       - name: Build Project
         run: pnpm run build
 
-      # 9. Déployer sur Vercel
+      # 8. Déployer sur Vercel
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

@@ -9,7 +9,6 @@ import {
   survivorOffering as SurvivorOffering,
   survivorObject as SurvivorObject,
 } from "@/generated/prisma";
-import { Label } from "./ui/label";
 import { useState } from "react";
 import { Switch } from "./ui/switch";
 import { KillerFormWithQuery } from "./killerForm";
@@ -42,18 +41,37 @@ export const MatchForm = (props: {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-row justify-between items-center">
-        <div className="flex flex-row gap-4 items-center">
-          <h1 className="text-xl font-bold">You were on :</h1>
-          <Switch
-            id="switchForm"
-            name="switchForm"
-            checked={killerSide}
-            onCheckedChange={setKillerSide}
-            className="data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-blue-500"
-          />
-          <Label htmlFor="switchForm">
-            {killerSide ? "Killer Side" : "Survivor Side"}
-          </Label>
+        <div className="flex flex-row gap-4 items-center justify-center bg-gradient-to-r from-blue-900/20 to-red-900/20 border border-border/50 rounded-xl p-4 shadow-lg w-full">
+          <h1 className="text-xl font-bold text-white">You were :</h1>
+          <div className="flex flex-row items-center gap-2">
+            <span
+              className={
+                "px-3 py-1 rounded-lg font-semibold transition-all duration-200 " +
+                (!killerSide
+                  ? "bg-blue-600 text-white shadow"
+                  : "bg-gray-700 text-gray-400")
+              }
+            >
+              Survivor
+            </span>
+            <Switch
+              id="switchForm"
+              name="switchForm"
+              checked={killerSide}
+              onCheckedChange={setKillerSide}
+              className="data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-blue-500 shadow"
+            />
+            <span
+              className={
+                "px-3 py-1 rounded-lg font-semibold transition-all duration-200 " +
+                (killerSide
+                  ? "bg-red-600 text-white shadow"
+                  : "bg-gray-700 text-gray-400")
+              }
+            >
+              Killer
+            </span>
+          </div>
         </div>
       </div>
       {killerSide ? (

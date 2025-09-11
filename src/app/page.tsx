@@ -11,6 +11,9 @@ import { getGlobalStats } from "@/lib/global-stats";
 import { getRecentKillers } from "@/lib/killer-stats";
 import { getRecentSurvivors } from "@/lib/survivor-stats";
 
+// Désactiver la génération statique car la page utilise des données utilisateur dynamiques
+export const revalidate = 0;
+
 export default async function Home() {
   const user = await getUser();
 
